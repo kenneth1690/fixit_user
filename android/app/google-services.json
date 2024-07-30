@@ -1,0 +1,179 @@
+{
+  "project_info": {
+    "project_number": "220480348179",
+    "firebase_url": "https://kimiiservicios.firebaseio.com",
+    "project_id": "kimiiservicios",
+    "storage_bucket": "kimiiservicios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220480348179:android:8e1de90a03f65940841fe6",
+        "android_client_info": {
+          "package_name": "com.empleadokimii.kcore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220480348179-ttbdf3u4df3hog0hl9121ouufkoktvau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxBhO2vDFZY2Brt9oMyQtoZmHgELQ97PQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220480348179-ttbdf3u4df3hog0hl9121ouufkoktvau.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "220480348179-0ufhhb2veop8ocohr3tjdgteigidu7l1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "wrteam.edemand.customer.eDemand"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220480348179:android:05068d2df9547bd3841fe6",
+        "android_client_info": {
+          "package_name": "com.kimiiproveedor.kcore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220480348179-ttbdf3u4df3hog0hl9121ouufkoktvau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxBhO2vDFZY2Brt9oMyQtoZmHgELQ97PQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220480348179-ttbdf3u4df3hog0hl9121ouufkoktvau.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "220480348179-0ufhhb2veop8ocohr3tjdgteigidu7l1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "wrteam.edemand.customer.eDemand"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220480348179:android:ae631c647a6fcc02841fe6",
+        "android_client_info": {
+          "package_name": "com.kimiiservicios.kcore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220480348179-p7jlk2t16a1qkk10g99l8qd90npieqpt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kimiiservicios.kcore",
+            "certificate_hash": "f6cbcf26599a656797b6373da0ee24995b9d0c79"
+          }
+        },
+        {
+          "client_id": "220480348179-rvtu0364ev3skknahehgpm876h9uqei9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kimiiservicios.kcore",
+            "certificate_hash": "1845d1625993d54c6a65ff02fdaff94bcde562cf"
+          }
+        },
+        {
+          "client_id": "220480348179-v7pmprdj4cha2m3uukdm6hmhoj95doru.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kimiiservicios.kcore",
+            "certificate_hash": "7c887cab902815ad2b57844330eecb360b26a278"
+          }
+        },
+        {
+          "client_id": "220480348179-ttbdf3u4df3hog0hl9121ouufkoktvau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxBhO2vDFZY2Brt9oMyQtoZmHgELQ97PQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220480348179-ttbdf3u4df3hog0hl9121ouufkoktvau.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "220480348179-0ufhhb2veop8ocohr3tjdgteigidu7l1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "wrteam.edemand.customer.eDemand"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220480348179:android:6c012cd89beba92d841fe6",
+        "android_client_info": {
+          "package_name": "wrteam.edemand.customer.e_demand"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220480348179-ttbdf3u4df3hog0hl9121ouufkoktvau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxBhO2vDFZY2Brt9oMyQtoZmHgELQ97PQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220480348179-ttbdf3u4df3hog0hl9121ouufkoktvau.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "220480348179-0ufhhb2veop8ocohr3tjdgteigidu7l1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "wrteam.edemand.customer.eDemand"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
