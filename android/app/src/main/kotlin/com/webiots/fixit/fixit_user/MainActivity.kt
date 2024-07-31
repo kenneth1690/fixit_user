@@ -1,4 +1,4 @@
-package com.webiots.fixituser
+package com.webiots.fixituserapi
 
 import io.flutter.embedding.android.FlutterActivity
 
