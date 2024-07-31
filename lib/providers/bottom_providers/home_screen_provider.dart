@@ -42,7 +42,7 @@ class HomeScreenProvider with ChangeNotifier {
 
   isEmptyLayout(context){
     final dash = Provider.of<DashboardProvider>(context,listen: false);
-    log("dash.bannerList.isNotEmpty :${dash.bannerList.isNotEmpty && dash.categoryList.isNotEmpty && dash.servicePackagesList.isNotEmpty && dash.featuredServiceList.isNotEmpty}");
+    log("dash.bannerList.isNotEmpty : ${dash.bannerList.length } && ${dash.categoryList.length} && ${dash.servicePackagesList.length} && ${dash.featuredServiceList.length}");
     return dash.bannerList.isNotEmpty || dash.categoryList.isNotEmpty || dash.servicePackagesList.isNotEmpty && dash.featuredServiceList.isNotEmpty;
   }
 

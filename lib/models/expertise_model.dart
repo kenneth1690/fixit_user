@@ -88,8 +88,8 @@ class ExpertisePivot {
   ExpertisePivot({this.userId, this.serviceId});
 
   ExpertisePivot.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
-    serviceId = json['service_id'];
+    userId = json['user_id']?.toString();
+    serviceId = json['service_id']?.toString();
   }
 
   Map<String, dynamic> toJson() {

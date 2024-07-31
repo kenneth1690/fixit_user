@@ -59,7 +59,7 @@ class StateDropDown extends StatelessWidget {
               ),
               dropdownSearchData: DropdownSearchData(
                   searchController: value.countryCtrl,
-                  searchInnerWidgetHeight: Sizes.s50,
+                  searchInnerWidgetHeight: Sizes.s60,
                   searchInnerWidget: Container(
                       height: Sizes.s50,
                       padding: const EdgeInsets.only(

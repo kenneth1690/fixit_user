@@ -28,7 +28,7 @@ PopupMenuItem buildPopupMenuItems(context, list,
     const EdgeInsets.symmetric(horizontal: Insets.i12, vertical: Insets.i2),
     height: 20,
     child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           icon == true
@@ -44,14 +44,14 @@ PopupMenuItem buildPopupMenuItems(context, list,
                   shape: BoxShape.circle),
               const HSpace(Sizes.s12),
               Text(language(context, data["title"]),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
                   style: appCss.dmDenseMedium12
                       .textColor(appColor(context).darkText)),
             ],
           )
               : Text(language(context, data),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.start,
               overflow: TextOverflow.ellipsis,
               style: appCss.dmDenseMedium12
                   .textColor(appColor(context).darkText)),

@@ -6,18 +6,18 @@ class PrimaryAddress {
   int? id;
   String? userId;
   String? serviceId;
-  String? isPrimary;
+  int? isPrimary;
   String? latitude;
   String? longitude;
   String? area;
   String? postalCode;
-  String? countryId;
-  String? stateId;
+  int? countryId;
+  int? stateId;
   String? city;
   String? address;
   String? type;
   String? alternativeName;
-  String? alternativePhone;
+  int? alternativePhone;
   String? code;
   String? createdAt;
   String? updatedAt;
@@ -50,7 +50,7 @@ class PrimaryAddress {
 
   PrimaryAddress.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    userId = json['user_id'];
+    userId = json['user_id']?.toString();
     serviceId = json['service_id'];
     isPrimary = json['is_primary'];
     latitude = json['latitude'];
@@ -64,7 +64,7 @@ class PrimaryAddress {
     type = json['type'];
     alternativeName = json['alternative_name'];
     alternativePhone = json['alternative_phone'];
-    code = json['code'];
+    code = json['code']?.toString();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];

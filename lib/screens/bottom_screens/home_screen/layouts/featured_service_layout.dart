@@ -53,7 +53,7 @@ class FeaturedServicesLayout extends StatelessWidget {
                         Container(),
                         SizedBox(
                                 child: Text(
-                                        "${double.parse(data!.discount!).round()}% ${language(context, appFonts.off)}",
+                                        "${data!.discount!}% ${language(context, appFonts.off)}",
                                         style: appCss.dmDenseMedium12.textColor(
                                             appColor(context).whiteColor))
                                     .padding(
@@ -112,13 +112,13 @@ class FeaturedServicesLayout extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                                "${getSymbol(context)}${(currency(context).currencyVal * double.parse(data!.price!)).toStringAsFixed(2)}",
+                                "${getSymbol(context)}${(currency(context).currencyVal * data!.price!).toStringAsFixed(2)}",
                                 style: appCss.dmDenseRegular14
                                     .textColor(appColor(context).lightText)
                                     .lineThrough),
                             const HSpace(Sizes.s8),
                             Text(
-                                "${getSymbol(context)}${((currency(context).currencyVal * double.parse(data!.serviceRate!)).toStringAsFixed(2))}",
+                                "${getSymbol(context)}${((currency(context).currencyVal * data!.serviceRate!).toStringAsFixed(2))}",
                                 style: appCss.dmDenseBold16
                                     .textColor(appColor(context).darkText))
                           ])

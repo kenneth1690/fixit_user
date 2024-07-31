@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit_user/config.dart';
 import 'package:fixit_user/widgets/alert_message_common.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../models/country_state_model.dart';
 import '../../services/environment.dart';
@@ -51,7 +53,7 @@ class NewLocationProvider with ChangeNotifier {
       isEdit = true;
       log("STATEID :${address!.countryId!}");
       nameCtrl.text = address!.alternativeName ?? "";
-      numberCtrl.text = address!.alternativePhone!;
+      numberCtrl.text = address!.alternativePhone!.toString();
       if (address!.latitude.toString() != position!.latitude.toString() &&
           address!.longitude.toString() != position!.longitude.toString()) {
         streetCtrl.text = locationCtrl.place!.street!;
@@ -64,18 +66,26 @@ class NewLocationProvider with ChangeNotifier {
         cityCtrl.text = address!.city!;
       }
 
-      countryValue = int.parse(address!.countryId!);
+      countryValue = address!.countryId!;
       int index = locationCtrl.countryStateList
           .indexWhere((element) => element.id == countryValue);
       country = locationCtrl.countryStateList[index];
       locationCtrl.stateList = locationCtrl.countryStateList[index].state!;
-      stateValue = int.parse(address!.stateId!);
+      stateValue = address!.stateId!;
       locationCtrl.notifyListeners();
 
       selectIndex = categoryList.indexWhere((element) =>
           element.toString().toLowerCase() == address!.type!.toLowerCase());
       state = locationCtrl.stateList[stateValue!];
-      isCheck = address!.isPrimary == "1" ? true : false;
+      isCheck = address!.isPrimary == 1 ? true : false;
+      log("DIAOCLODE1 :${address!.code}");
+      int dialCodeIndex = countriesEnglish.indexWhere((element) => element['dial_code'] == "${address!.code!= null? address!.code!.contains("+")? "" :"+":"+"}${address!.code}");
+      log("index :$index");
+      if(index >=0){
+        dialCode = countriesEnglish[dialCodeIndex]['dial_code'];
+        notifyListeners();
+      }
+      log("DIAOCLODE :${dialCode}");
     } else {
       nameCtrl.text = "";
 
@@ -91,7 +101,7 @@ class NewLocationProvider with ChangeNotifier {
 
       if (ind >= 0) {
         country = locationCtrl.countryStateList[ind];
-        countryValue = ind;
+        countryValue = locationCtrl.countryStateList[ind].id;
 
         locationCtrl.stateList = locationCtrl.countryStateList[ind].state!;
       }
@@ -101,7 +111,7 @@ class NewLocationProvider with ChangeNotifier {
       log("stateIndex :$stateIndex");
       if (stateIndex >= 0) {
         state = locationCtrl.stateList[stateIndex];
-        stateValue = stateIndex;
+        stateValue = locationCtrl.stateList[stateIndex].id;
       }
       notifyListeners();
 
@@ -150,6 +160,9 @@ class NewLocationProvider with ChangeNotifier {
 
   onChangeCountry(context, val,CountryStateModel c) {
     countryValue = val;
+    state = null;
+    stateValue = null;
+
     final locationCtrl = Provider.of<LocationProvider>(context, listen: false);
 country = c;
     int index = locationCtrl.countryStateList
@@ -176,6 +189,7 @@ country = c;
       if (isEdit) {
         editAddress(context);
       } else {
+        log("ADDDD");
         if(country != null){
           if(state !=null){
             addAddress(context);
@@ -195,7 +209,8 @@ country = c;
 
     try {
       final locationCtrl = Provider.of<LocationProvider>(context, listen: false);
-
+log("countryValue :${countryValue}");
+log("countryValue :${locationCtrl.countryStateList.length}");
       showLoading(context);
       notifyListeners();
       var body = {
@@ -203,8 +218,8 @@ country = c;
         "longitude": position!.longitude,
         "type": categoryList[selectIndex].toString().toLowerCase(),
         "address": streetCtrl.text,
-        "country_id": locationCtrl.countryStateList[countryValue!].id,
-        "state_id": locationCtrl.stateList[stateValue!].id,
+        "country_id": countryValue,
+        "state_id": stateValue,
         "city": cityCtrl.text,
         "postal_code": zipCtrl.text,
         "alternative_name": nameCtrl.text,
@@ -217,24 +232,55 @@ country = c;
       log("body : $body");
       await apiServices
           .postApi('$apiUrl/address', body, isToken: true)
-          .then((value) {
-        hideLoading(context);
-        log("VVVV : ${value.isSuccess}");
-        notifyListeners();
+          .then((value) async{
+
         if (value.isSuccess!) {
-          locationCtrl.getLocationList(context);
+
+       await   locationCtrl.getLocationList(context);
+       hideLoading(context);
+       log("VVVV : ${value.isSuccess}");
+       notifyListeners();
           route.pop(context);
           route.pop(context);
 
         } else {
-          snackBarMessengers(context,
-              color: appColor(context).red, message: value.message);
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          hideLoading(context);
+          if(value.message.toLowerCase() == "unauthenticated."){
+            userModel =null;
+            setPrimaryAddress = null;
+            userPrimaryAddress = null;
+            final dash = Provider.of<DashboardProvider>(context, listen: false);
+            dash.selectIndex =0;
+            dash.notifyListeners();
+            pref.remove(session.user);
+            pref.remove(session.accessToken);
+            pref.remove(session.isContinueAsGuest);
+            pref.remove(session.isLogin);
+            pref.remove(session.cart);
+            pref.remove(session.recentSearch);
+
+
+            final auth = FirebaseAuth.instance.currentUser;
+            if(auth != null){
+              FirebaseAuth.instance.signOut();
+              GoogleSignIn().disconnect();
+            }
+            notifyListeners();
+            route.pushAndRemoveUntil(context);
+          }else {
+
+            log("VVVV : ${value.isSuccess}");
+            notifyListeners();
+            snackBarMessengers(context,
+                color: appColor(context).red, message: value.message);
+          }
         }
       });
     } catch (e) {
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH addAddress: $e");
     }
   }
 
@@ -280,7 +326,7 @@ country = c;
     } catch (e) {
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH editAddress: $e");
     }
   }
 }

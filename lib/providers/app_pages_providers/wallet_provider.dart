@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit_user/config.dart';
 import 'package:fixit_user/models/app_setting_model.dart';
 import 'package:fixit_user/widgets/alert_message_common.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../screens/app_pages_screens/wallet_balance_screen/layouts/add_money_layout.dart';
 import '../../screens/bottom_screens/cart_screen/layouts/service_detail_layout.dart';
@@ -40,7 +42,7 @@ class WalletProvider with ChangeNotifier {
       Provider.of<CommonApiProvider>(context, listen: false);
       await commonApi.selfApi(context);
 
-      getWalletList();
+      getWalletList(context);
     });
   }
 
@@ -64,16 +66,16 @@ class WalletProvider with ChangeNotifier {
     log("paymentList SS${paymentList.length}");
     log("paymentList SS${paymentMethods.length}");
     if(walletList.isEmpty) {
-      getWalletList();
+      getWalletList(context);
     }
     notifyListeners();
   }
 
-  getWalletList() async {
+  getWalletList(context) async {
     try {
       await apiServices
           .getApi(api.wallet, [], isToken: true, isData: true)
-          .then((value) {
+          .then((value)async {
         if (value.isSuccess!) {
           log("WALLLL :${value.data}");
           balance = double.parse(value.data['balance'].toString());
@@ -81,6 +83,10 @@ class WalletProvider with ChangeNotifier {
           for (var data in value.data['transactions']['data']) {
             walletList.add(WalletList.fromJson(data));
           }
+          final commonApi =
+          Provider.of<CommonApiProvider>(context, listen: false);
+          await commonApi.selfApi(context);
+
           notifyListeners();
         }
       });
@@ -93,10 +99,11 @@ class WalletProvider with ChangeNotifier {
   //add to wallet
   addToWallet(context1,context) async {
     FocusScope.of(context).requestFocus(FocusNode());
-    route.pop(context);
-    showLoading(context);
-    notifyListeners();
+
     try {
+      route.pop(context);
+      showLoading(context);
+      notifyListeners();
       var body = {
         "amount": moneyCtrl.text,
         "payment_method": wallet,
@@ -121,7 +128,7 @@ class WalletProvider with ChangeNotifier {
             if (e != null) {
 
               if (e['isVerify'] == true) {
-                await getWalletList();
+                await getWalletList(context);
                 await getVerifyPayment(value.data['item_id'], context);
 
 
@@ -130,7 +137,33 @@ class WalletProvider with ChangeNotifier {
           });
           notifyListeners();
         } else {
-          snackBarMessengers(context, message: value.message);
+          SharedPreferences pref = await SharedPreferences.getInstance();
+
+          if(value.message.toLowerCase() == "unauthenticated."){
+            userModel =null;
+            setPrimaryAddress = null;
+            userPrimaryAddress = null;
+            final dash = Provider.of<DashboardProvider>(context, listen: false);
+            dash.selectIndex =0;
+            dash.notifyListeners();
+            pref.remove(session.user);
+            pref.remove(session.accessToken);
+            pref.remove(session.isContinueAsGuest);
+            pref.remove(session.isLogin);
+            pref.remove(session.cart);
+            pref.remove(session.recentSearch);
+
+
+            final auth = FirebaseAuth.instance.currentUser;
+            if(auth != null){
+              FirebaseAuth.instance.signOut();
+              GoogleSignIn().disconnect();
+            }
+            notifyListeners();
+            route.pushAndRemoveUntil(context);
+          }else {
+            snackBarMessengers(context, message: value.message);
+          }
         }
       });
     } catch (e) {
@@ -156,7 +189,7 @@ class WalletProvider with ChangeNotifier {
               backgroundColor: appColor(context).red,
             ));
           } else {
-            getWalletList();
+            getWalletList(context);
           }
         }
       });

@@ -13,7 +13,7 @@ import FirebaseFirestore
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     FirebaseApp.configure()
-          GMSServices.provideAPIKey("Your Google Map App Id")
+          GMSServices.provideAPIKey("Your Google Map Id")
            GeneratedPluginRegistrant.register(with: self)
            if #available(iOS 10.0, *) {
                  // For iOS 10 display notification (sent via APNS)

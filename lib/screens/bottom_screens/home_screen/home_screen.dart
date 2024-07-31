@@ -19,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen>
       return Consumer<HomeScreenProvider>(builder: (context1, value, child) {
         return Consumer<LocationProvider>(
             builder: (context2, locationCtrl, child) {
-              log("currentAddress :${dash.firstTwoBlogList.length}");
           return StatefulWrapper(
               onInit: () => Future.delayed(const Duration(milliseconds: 100),
                   () => value.onAnimate(this)),

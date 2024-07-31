@@ -45,7 +45,7 @@ class HomeCouponLayout extends StatelessWidget {
             width: data!.type == "percentage" ? Sizes.s35 : Sizes.s38,
             child: Text(
                 language(context,
-                    '${double.parse(data!.amount!).round()}${data!.type == "percentage" ? "%" : "${getSymbol(context)}"}\n${language(context, appFonts.off).toUpperCase()}'),
+                    '${data!.amount!.round()}${data!.type == "percentage" ? "%" : "${getSymbol(context)}"}\n${language(context, appFonts.off).toUpperCase()}'),
                 overflow: TextOverflow.ellipsis,
                 style: appCss.dmDenseBold14
                     .textColor(appColor(context).primary)))

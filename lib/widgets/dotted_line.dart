@@ -1,6 +1,5 @@
 import '../config.dart';
 
-
 class DottedLines extends StatelessWidget {
   final Color? color;
   final double? width;
@@ -10,7 +9,6 @@ class DottedLines extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DottedLine(
-
         direction: direction ?? Axis.horizontal,
         lineLength: width ?? double.infinity,
         lineThickness: 1.5,

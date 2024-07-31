@@ -1,4 +1,3 @@
-
 import 'package:fixit_user/services/environment.dart';
 
 class ApiMethods {
@@ -14,7 +13,7 @@ class ApiMethods {
   String servicePackages = '$apiUrl/servicePackages';
   String featuredServices = '$apiUrl/featuredServices';
   String blog = '$apiUrl/blog';
-  String favouriteList = '$apiUrl/favourite-list';
+  String favouriteList = '$apiUrl/CC';
   String favoriteList = '$apiUrl/favorite-list';
   String address = '$apiUrl/address';
   String setAddressPrimary = '$apiUrl/address/isPrimary';

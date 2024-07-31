@@ -7,22 +7,24 @@ import '../config.dart';
 
 class BookingModel {
   int? id;
-  String? parentId;
+  int? parentId;
+  int? amount;
   String? bookingNumber;
   int? consumerId;
   int? couponId;
+  double? taxTotal;
   double? walletBalance;
   double? convertWalletBalance;
-  String? providerId;
-  String? serviceId;
-  String? servicePackageId;
-  String? addressId;
+  int? providerId;
+  int? serviceId;
+  int? servicePackageId;
+  int? addressId;
   double? servicePrice;
   double? tax;
   double? perServicemanCharge;
-  String? totalExtraServicemen;
-  String? totalServicemen;
-  String? requiredServicemen;
+  int? totalExtraServicemen;
+  int? totalServicemen;
+  int? requiredServicemen;
   double? totalExtraServicemenCharge;
   double? couponTotalDiscount;
   double? subtotal;
@@ -55,9 +57,11 @@ class BookingModel {
   BookingModel(
       {this.id,
         this.parentId,
+        this.amount,
         this.bookingNumber,
         this.consumerId,
         this.couponId,
+        this.taxTotal,
         this.walletBalance,
         this.convertWalletBalance,
         this.providerId,
@@ -102,9 +106,11 @@ class BookingModel {
 
     id = json['id'];
     parentId = json['parent_id'];
+    amount = json['amount'];
     bookingNumber = json['booking_number'];
     consumerId = json['consumer_id'];
     couponId = json['coupon_id'];
+    taxTotal = json['tax_total'] != null ? double.parse(json['tax_total'].toString()) :null;
     walletBalance = json['wallet_balance'] != null ? double.parse(json['wallet_balance'].toString()) :null;
     convertWalletBalance = json['convert_wallet_balance'] != null? double.parse(json['convert_wallet_balance'].toString()):null;
     providerId = json['provider_id'];
@@ -181,9 +187,11 @@ class BookingModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['parent_id'] = parentId;
+    data['amount'] = amount;
     data['booking_number'] = bookingNumber;
     data['consumer_id'] = consumerId;
     data['coupon_id'] = couponId;
+    data['tax_total'] = taxTotal;
     data['wallet_balance'] = walletBalance;
     data['convert_wallet_balance'] = convertWalletBalance;
     data['provider_id'] = providerId;
@@ -274,8 +282,8 @@ class Status {
 
 class BookingReasons {
   int? id;
-  String? bookingId;
-  String? statusId;
+  int? bookingId;
+  int? statusId;
   String? reason;
   String? createdAt;
   String? updatedAt;
@@ -408,8 +416,8 @@ class UserDetail {
 
 class BookingStatusLogs {
   int? id;
-  String? bookingId;
-  String? bookingStatusId;
+  int? bookingId;
+  int? bookingStatusId;
   String? title;
   String? description;
   String? createdAt;
@@ -480,10 +488,10 @@ class BookingProviderModel {
   int? id;
   String? name;
   String? experienceInterval;
-  String? experienceDuration;
+  int? experienceDuration;
   String? email;
   String? phone;
-  int? reviewRatings;
+  double? reviewRatings;
   PrimaryAddress? primaryAddress;
   List<Media>? media;
   WalletModel? wallet;
@@ -512,8 +520,8 @@ class BookingProviderModel {
     experienceInterval = json['experience_interval'];
     experienceDuration = json['experience_duration'];
     email = json['email'];
-    phone = json['phone'];
-    reviewRatings = json['review_ratings'];
+    phone = json['phone']?.toString();
+    reviewRatings = json['review_ratings'] != null ? double.parse(json['review_ratings'].toString()):null;
     primaryAddress = json['primary_address'] != null
         ? PrimaryAddress.fromJson(json['primary_address'])
         : null;

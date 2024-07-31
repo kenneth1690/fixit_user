@@ -97,7 +97,7 @@ class CategoriesListScreen extends StatelessWidget {
                                   height: Sizes.s80,
                                   width: Sizes.s178))
                       ])),
-
+if(value.searchCtrl.text.isEmpty)
                 if(value.categoryList.isNotEmpty)
                 value.isGrid
                     ? const GridCategoryList()

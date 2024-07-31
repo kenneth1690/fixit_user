@@ -136,7 +136,7 @@ class _CartLayoutState extends State<CartLayout> {
                   Row(children: [
                     Text(
                         language(context,
-                            "${getSymbol(context)}${(currency(context).currencyVal * double.parse(widget.data!.isPackage! ? widget.data!.servicePackageList!.price! : widget.data!.serviceList!.serviceRate!)).toStringAsFixed(2)}"),
+                            "${getSymbol(context)}${(currency(context).currencyVal * (widget.data!.isPackage! ? widget.data!.servicePackageList!.price! : widget.data!.serviceList!.serviceRate!)).toStringAsFixed(2)}"),
                         style: appCss.dmDenseBold18
                             .textColor(appColor(context).primary)),
                     if (widget.data!.isPackage!

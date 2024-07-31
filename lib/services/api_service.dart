@@ -30,23 +30,30 @@ class ApiServices {
     return url;
   }
 
-  Future<APIDataClass> dioException(e)async {
+  Future<APIDataClass> dioException(e) async {
     APIDataClass apiData =
-    APIDataClass(message: 'No data', isSuccess: false, data: '0');
+        APIDataClass(message: 'No data', isSuccess: false, data: '0');
     if (e is DioException) {
       if (e.type == DioExceptionType.badResponse) {
         final response = e.response;
-
-        if (response!.data != null) {
-          apiData.message = response.data['message'];
-          apiData.isSuccess = false;
-          apiData.data = 0;
-          return apiData;
-        } else {
+        if (response!.statusCode == 403) {
           apiData.message = response.data.toString();
           apiData.isSuccess = false;
-          apiData.data = 0;
+          apiData.data = response.statusCode;
+
           return apiData;
+        } else {
+          if (response.data != null) {
+            apiData.message = response.data['message'];
+            apiData.isSuccess = false;
+            apiData.data = 0;
+            return apiData;
+          } else {
+            apiData.message = response.data.toString();
+            apiData.isSuccess = false;
+            apiData.data = 0;
+            return apiData;
+          }
         }
       } else {
         final response = e.response;
@@ -71,8 +78,10 @@ class ApiServices {
     }
   }
 
+
+
   Future<APIDataClass> getApi(String apiName, dynamic params,
-      {isToken = false,isData = false,isMessage = true}) async {
+      {isToken = false, isData = false, isMessage = true}) async {
     //default data to class
     APIDataClass apiData = APIDataClass(
       message: 'No data',
@@ -95,7 +104,7 @@ class ApiServices {
         String? token = pref.getString(session.accessToken);
         log("token : $token");
         Response? response;
-         response = await dio.get(
+        response = await dio.get(
           apiName,
           data: params,
           options: Options(headers: isToken ? headersToken(token) : headers),
@@ -107,12 +116,17 @@ class ApiServices {
           log("$apiName Response: $responseData");
 
           //set data to class
-          if(isData){
-            apiData.message = isMessage ?  apiName.contains("highest-ratings") ? "": responseData["message"] ?? "" : "";
+          if (isData) {
+            log("dskyghvjryb");
+            apiData.message = isMessage
+                ? apiName.contains("highest-ratings")
+                    ? ""
+                    : responseData["message"] ?? ""
+                : "";
             apiData.isSuccess = true;
             apiData.data = responseData;
             return apiData;
-          }else {
+          } else {
             apiData.message = responseData["message"] ?? "";
             apiData.isSuccess = true;
             apiData.data = apiName.contains("self")
@@ -127,15 +141,15 @@ class ApiServices {
           return apiData;
         }
       } catch (e) {
-
-        apiData =await dioException(e);
+        apiData = await dioException(e);
         log("DDDD :${apiData.message}");
         return apiData;
       }
     }
   }
 
-  Future<APIDataClass> postApi(String apiName, body, {isToken = false,isData=false}) async {
+  Future<APIDataClass> postApi(String apiName, body,
+      {isToken = false, isData = false}) async {
     //default data to class
     APIDataClass apiData = APIDataClass(
       message: 'No data',
@@ -184,13 +198,12 @@ class ApiServices {
             apiData.data = "";
             return apiData;
           } else {
-
-            if(isData){
+            if (isData) {
               apiData.message = responseData["message"] ?? "";
               apiData.isSuccess = true;
               apiData.data = responseData;
               return apiData;
-            }else {
+            } else {
               apiData.message = responseData["message"] ?? "";
               apiData.isSuccess = true;
               apiData.data = responseData["data"];
@@ -247,7 +260,8 @@ class ApiServices {
     }
   }
 
-  Future<APIDataClass> deleteApi(String apiName, body, {isToken = false}) async {
+  Future<APIDataClass> deleteApi(String apiName, body,
+      {isToken = false}) async {
     //default data to class
     APIDataClass apiData = APIDataClass(
       message: 'No data',
@@ -311,7 +325,7 @@ class ApiServices {
             final response = e.response;
             if (response != null && response.data != null) {
               final Map responseData =
-              json.decode(response.data as String) as Map;
+                  json.decode(response.data as String) as Map;
               apiData.message = responseData['message'] as String;
               apiData.isSuccess = false;
               apiData.data = 0;
@@ -333,7 +347,8 @@ class ApiServices {
     }
   }
 
-  Future<APIDataClass> putApi(String apiName, body, {isToken = false,isData=false}) async {
+  Future<APIDataClass> putApi(String apiName, body,
+      {isToken = false, isData = false}) async {
     //default data to class
     APIDataClass apiData = APIDataClass(
       message: 'No data',
@@ -368,7 +383,7 @@ class ApiServices {
 
           if (isData) {
             log("RESPONJSE : ${response.data}");
-          /*  await pref.setString(
+            /*  await pref.setString(
                 session.accessToken, responseData['access_token']);*/
             //set data to class
             apiData.message = "";

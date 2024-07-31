@@ -88,7 +88,7 @@ class CategoriesDetailsProvider with ChangeNotifier {
           List provider = value.data;
           providerList = [];
           for (var data in provider) {
-            log("PPPPP :$data");
+
             if (!providerList.contains(ProviderModel.fromJson(data))) {
               providerList.add(ProviderModel.fromJson(data));
             }
@@ -246,7 +246,7 @@ class CategoriesDetailsProvider with ChangeNotifier {
 
     try {
       String apiUrl = "";
-      log("isSelect :$isSelect // $lowerVal // $upperVal");
+      log("isSelect :$isSelect // $lowerVal // $upperVal // $zoneIds");
       if (isSelect == null &&
           lowerVal == 0.0 &&
           selectedProvider.isEmpty &&
@@ -267,10 +267,10 @@ class CategoriesDetailsProvider with ChangeNotifier {
         log("LOG 4");
         apiUrl =
             "${api.service}?categoryIds=$id&zone_ids=$zoneIds&providerIds=$selectedProvider&rating=$selectedRates&search=${searchCtrl.text}";
-      } else if (lowerVal != 0 && upperVal != 100) {
+      } else if (lowerVal != 0 || upperVal != 100) {
         log("LOG 5");
         apiUrl =
-            "${api.service}?categoryIds=$id&min=$lowerVal&max$upperVal&zone_ids=$zoneIds&search=${searchCtrl.text}";
+            "${api.service}?categoryIds=$id&min=${lowerVal.round()}&max${upperVal.round()}&zone_ids=$zoneIds";
       } else if (isSelect != null && !isSelect!) {
         log("LOG 6");
         apiUrl =
@@ -332,16 +332,18 @@ class CategoriesDetailsProvider with ChangeNotifier {
       log("URRR L: $apiUrl");
       await apiServices.getApi(apiUrl, []).then((value) {
         if (value.isSuccess!) {
+
           List dataList = value.data;
           serviceList = [];
+          log("serviceListserviceList;${dataList.length}");
           if (dataList.isNotEmpty) {
             for (var data in value.data) {
               Services services = Services.fromJson(data);
               if (!serviceList.contains(services)) {
                 serviceList.add(services);
               }
-              if (double.parse(services.price!) > maxPrice) {
-                maxPrice = double.parse(services.price!);
+              if (services.price! > maxPrice) {
+                maxPrice = services.price!;
                 log(" a :::::::$maxPrice");
               }
 
@@ -429,13 +431,13 @@ class CategoriesDetailsProvider with ChangeNotifier {
   }
 
   onRemoveService(context, index) async {
-    if (int.parse(serviceList[index].selectedRequiredServiceMan!) == 1) {
+    if ((serviceList[index].selectedRequiredServiceMan!) == 1) {
       route.pop(context);
       isAlert = false;
       notifyListeners();
     } else {
-      if (int.parse(serviceList[index].requiredServicemen!) ==
-          int.parse(serviceList[index].selectedRequiredServiceMan!)) {
+      if ((serviceList[index].requiredServicemen!) ==
+          (serviceList[index].selectedRequiredServiceMan!)) {
         isAlert = true;
         notifyListeners();
         await Future.delayed(DurationClass.s3);
@@ -445,8 +447,8 @@ class CategoriesDetailsProvider with ChangeNotifier {
         isAlert = false;
         notifyListeners();
         serviceList[index].selectedRequiredServiceMan =
-            (int.parse(serviceList[index].selectedRequiredServiceMan!) - 1)
-                .toString();
+            ((serviceList[index].selectedRequiredServiceMan!) - 1)
+                ;
       }
     }
     notifyListeners();
@@ -455,9 +457,9 @@ class CategoriesDetailsProvider with ChangeNotifier {
   onAdd(index) {
     isAlert = false;
     notifyListeners();
-    int count = int.parse(serviceList[index].selectedRequiredServiceMan!);
+    int count = (serviceList[index].selectedRequiredServiceMan!);
     count++;
-    serviceList[index].selectedRequiredServiceMan = count.toString();
+    serviceList[index].selectedRequiredServiceMan = count;
 
     notifyListeners();
   }

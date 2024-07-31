@@ -5,14 +5,14 @@ class CategoryModel {
   String? title;
   String? slug;
   String? description;
-  String? parentId;
+  int? parentId;
   String? metaTitle;
   String? metaDescription;
-  String? commission;
-  String? status;
+  int? commission;
+  int? status;
   String? isFeatured;
   String? categoryType;
-  String? createdBy;
+  int? createdBy;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -52,7 +52,7 @@ class CategoryModel {
     metaDescription = json['meta_description'];
     commission = json['commission'];
     status = json['status'];
-    isFeatured = json['is_featured'];
+    isFeatured = json['is_featured']?.toString();
     categoryType = json['category_type'];
     createdBy = json['created_by'];
     createdAt = json['created_at'];
@@ -113,8 +113,8 @@ class Pivot {
   Pivot({this.serviceId, this.categoryId});
 
   Pivot.fromJson(Map<String, dynamic> json) {
-    serviceId = json['service_id'];
-    categoryId = json['category_id'];
+    serviceId = json['service_id']?.toString();
+    categoryId = json['category_id']?.toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -166,14 +166,14 @@ class HasSubCategories {
     title = json['title'];
     slug = json['slug'];
     description = json['description'];
-    parentId = json['parent_id'];
+    parentId = json['parent_id']?.toString();
     metaTitle = json['meta_title'];
     metaDescription = json['meta_description'];
-    commission = json['commission'];
-    status = json['status'];
-    isFeatured = json['is_featured'];
+    commission = json['commission']?.toString();
+    status = json['status']?.toString();
+    isFeatured = json['is_featured']?.toString();
     categoryType = json['category_type'];
-    createdBy = json['created_by'];
+    createdBy = json['created_by']?.toString();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];

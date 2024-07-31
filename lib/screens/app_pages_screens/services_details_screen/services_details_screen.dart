@@ -144,7 +144,7 @@ class ServicesDetailsScreen extends StatelessWidget {
                                                                           appColor(context)
                                                                               .primary)),
                                                               Text(
-                                                                  "${getSymbol(context)}${(currency(context).currencyVal * double.parse(serviceCtrl.service!.serviceRate!)).toStringAsFixed(2)}",
+                                                                  "${getSymbol(context)}${(currency(context).currencyVal * (serviceCtrl.service!.serviceRate!)).toStringAsFixed(2)}",
                                                                   style: appCss
                                                                       .dmDenseBold18
                                                                       .textColor(

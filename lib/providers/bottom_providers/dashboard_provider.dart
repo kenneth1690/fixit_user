@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fixit_user/common_tap.dart';
 import 'package:fixit_user/widgets/alert_message_common.dart';
 import 'package:flutter/services.dart';
@@ -70,19 +71,17 @@ class DashboardProvider with ChangeNotifier {
     }
     if (selectIndex != 1) {
       final booking = Provider.of<BookingProvider>(context, listen: false);
-      if(booking.animationController != null) {
+      if (booking.animationController != null) {
         if (booking.animationController != null) {
           booking.animationController!.stop();
           booking.notifyListeners();
         }
       }
-      final data =
-      Provider.of<DashboardProvider>(context, listen: false);
+      final data = Provider.of<DashboardProvider>(context, listen: false);
       data.getBookingHistory(context);
-      final book = Provider.of<BookingProvider>(context,listen: false);
+      final book = Provider.of<BookingProvider>(context, listen: false);
 
-      book.clearTap(context,isBack: false);
-
+      book.clearTap(context, isBack: false);
     } else if (selectIndex == 1) {
       final booking = Provider.of<BookingProvider>(context, listen: false);
       booking.animationController!.reset();
@@ -129,8 +128,7 @@ class DashboardProvider with ChangeNotifier {
   //banner list
   getBanner() async {
     try {
-      await apiServices
-          .getApi(api.banner, []).then((value) {
+      await apiServices.getApi(api.banner, []).then((value) {
         if (value.isSuccess!) {
           bannerList = [];
           for (var data in value.data) {
@@ -138,8 +136,10 @@ class DashboardProvider with ChangeNotifier {
             notifyListeners();
           }
         }
+        log("BANNER : ${bannerList.length}");
       });
     } catch (e) {
+      log("EEEE getBanner : $e");
       notifyListeners();
     }
   }
@@ -147,7 +147,8 @@ class DashboardProvider with ChangeNotifier {
   //offer list
   getOffer() async {
     try {
-      await apiServices.getApi("${api.banner}?banner_type=true", []).then((value) {
+      await apiServices
+          .getApi("${api.banner}?banner_type=true", []).then((value) {
         if (value.isSuccess!) {
           offerList = [];
           notifyListeners();
@@ -159,6 +160,7 @@ class DashboardProvider with ChangeNotifier {
         notifyListeners();
       });
     } catch (e) {
+      log("EEEE getOffer : $e");
       notifyListeners();
     }
   }
@@ -227,8 +229,8 @@ class DashboardProvider with ChangeNotifier {
         }
       });
     } catch (e) {
-      debugPrint("EEEE getCoupons: $e")
-;      notifyListeners();
+      debugPrint("EEEE getCoupons: $e");
+      notifyListeners();
     }
   }
 
@@ -264,8 +266,10 @@ class DashboardProvider with ChangeNotifier {
           }
         }
       });
+
     } catch (e) {
       notifyListeners();
+      log("EEEE getCategory : $e");
     }
   }
 
@@ -297,6 +301,7 @@ class DashboardProvider with ChangeNotifier {
       });
     } catch (e) {
       notifyListeners();
+      log("EEEE getServicePackage s: $e");
     }
   }
 
@@ -320,9 +325,11 @@ class DashboardProvider with ChangeNotifier {
           }
           notifyListeners();
         }
+        log("FA :${featuredServiceList.length}");
       });
     } catch (e) {
       notifyListeners();
+      log("EEEE getFeaturedPackage : $e"  );
     }
   }
 
@@ -345,6 +352,8 @@ class DashboardProvider with ChangeNotifier {
         debugPrint("firstTwoBlogList :${firstTwoBlogList.length}");
       });
     } catch (e) {
+
+      log("EEEE getBlog : $e");
       notifyListeners();
     }
   }
@@ -357,7 +366,6 @@ class DashboardProvider with ChangeNotifier {
           List provider = value.data;
           providerList = [];
           for (var data in provider.reversed.toList()) {
-            debugPrint("PPPPP :$data");
             providerList.add(ProviderModel.fromJson(data));
             notifyListeners();
           }
@@ -380,7 +388,6 @@ class DashboardProvider with ChangeNotifier {
           List provider = value.data;
 
           for (var data in provider.reversed.toList()) {
-            debugPrint("PPPPP :$data");
             providerList.add(ProviderModel.fromJson(data));
             notifyListeners();
           }
@@ -396,14 +403,13 @@ class DashboardProvider with ChangeNotifier {
 
   onRemoveService(context, index) async {
     if (firstTwoFeaturedServiceList.isEmpty) {
-      if (int.parse(featuredServiceList[index].selectedRequiredServiceMan!) ==
-          1) {
+      if ((featuredServiceList[index].selectedRequiredServiceMan!) == 1) {
         isAlert = false;
         notifyListeners();
         route.pop(context);
       } else {
-        if (int.parse(featuredServiceList[index].requiredServicemen!) ==
-            int.parse(featuredServiceList[index].selectedRequiredServiceMan!)) {
+        if ((featuredServiceList[index].requiredServicemen!) ==
+            (featuredServiceList[index].selectedRequiredServiceMan!)) {
           isAlert = true;
           notifyListeners();
           await Future.delayed(DurationClass.s3);
@@ -412,23 +418,20 @@ class DashboardProvider with ChangeNotifier {
         } else {
           isAlert = false;
           notifyListeners();
-          featuredServiceList[index].selectedRequiredServiceMan = (int.parse(
-                      featuredServiceList[index].selectedRequiredServiceMan!) -
-                  1)
-              .toString();
+          featuredServiceList[index].selectedRequiredServiceMan =
+              ((featuredServiceList[index].selectedRequiredServiceMan!) - 1);
         }
       }
     } else {
-      if (int.parse(
-              firstTwoFeaturedServiceList[index].selectedRequiredServiceMan!) ==
+      if ((firstTwoFeaturedServiceList[index].selectedRequiredServiceMan!) ==
           1) {
         isAlert = false;
         notifyListeners();
         route.pop(context);
       } else {
         debugPrint("djghdfkjg");
-        if (int.parse(featuredServiceList[index].requiredServicemen!) ==
-            int.parse(featuredServiceList[index].selectedRequiredServiceMan!)) {
+        if ((featuredServiceList[index].requiredServicemen!) ==
+            (featuredServiceList[index].selectedRequiredServiceMan!)) {
           isAlert = true;
           notifyListeners();
           await Future.delayed(DurationClass.s3);
@@ -437,10 +440,8 @@ class DashboardProvider with ChangeNotifier {
         } else {
           isAlert = false;
           notifyListeners();
-          featuredServiceList[index].selectedRequiredServiceMan = (int.parse(
-                      featuredServiceList[index].selectedRequiredServiceMan!) -
-                  1)
-              .toString();
+          featuredServiceList[index].selectedRequiredServiceMan =
+              ((featuredServiceList[index].selectedRequiredServiceMan!) - 1);
         }
       }
     }
@@ -450,10 +451,9 @@ class DashboardProvider with ChangeNotifier {
   onAdd(index) {
     isAlert = false;
     notifyListeners();
-    int count =
-        int.parse(featuredServiceList[index].selectedRequiredServiceMan!);
+    int count = (featuredServiceList[index].selectedRequiredServiceMan!);
     count++;
-    featuredServiceList[index].selectedRequiredServiceMan = count.toString();
+    featuredServiceList[index].selectedRequiredServiceMan = count;
 
     notifyListeners();
   }
@@ -462,7 +462,8 @@ class DashboardProvider with ChangeNotifier {
     if (inCart) {
       route.pushNamed(context, routeName.cartScreen);
     } else {
-      final providerDetail = Provider.of<ProviderDetailsProvider>(context, listen: false);
+      final providerDetail =
+          Provider.of<ProviderDetailsProvider>(context, listen: false);
       providerDetail.selectProviderIndex = 0;
       providerDetail.notifyListeners();
       onBook(context, service!,
@@ -493,62 +494,138 @@ class DashboardProvider with ChangeNotifier {
       notifyListeners();
 
       debugPrint("STATYS L ${bookingStatusList.length}");
-      int cancelIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "cancel" ||element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "cancelled");
-      if(cancelIndex >=0){
+      int cancelIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", "")
+                  .replaceAll("_", "") ==
+              "cancel" ||
+          element.slug!
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", "")
+                  .replaceAll("_", "") ==
+              "cancelled");
+      if (cancelIndex >= 0) {
         debugPrint("CANCEl :${bookingStatusList[cancelIndex].slug}");
         appFonts.cancel = bookingStatusList[cancelIndex].slug!;
-
       }
-      int acceptedIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "accepted" || element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "accept" );
-      if(acceptedIndex >=0){
+      int acceptedIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", "")
+                  .replaceAll("_", "") ==
+              "accepted" ||
+          element.slug!
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", "")
+                  .replaceAll("_", "") ==
+              "accept");
+      if (acceptedIndex >= 0) {
         debugPrint("ACCEPTEF :${bookingStatusList[acceptedIndex].slug}");
-        appFonts.accepted  = bookingStatusList[acceptedIndex].slug!;
+        appFonts.accepted = bookingStatusList[acceptedIndex].slug!;
       }
 
-      int assignedIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "assign" || element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "assigned" );
-      if(assignedIndex >=0){
+      int assignedIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", "")
+                  .replaceAll("_", "") ==
+              "assign" ||
+          element.slug!
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", "")
+                  .replaceAll("_", "") ==
+              "assigned");
+      if (assignedIndex >= 0) {
         debugPrint("ASSIGNED :${bookingStatusList[assignedIndex].slug}");
-        appFonts.assigned  = bookingStatusList[assignedIndex].slug!;
+        appFonts.assigned = bookingStatusList[assignedIndex].slug!;
       }
 
-      int onTheWayIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "ontheway");
-      if(onTheWayIndex >=0){
+      int onTheWayIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+              .toLowerCase()
+              .replaceAll("-", "")
+              .replaceAll(" ", "")
+              .replaceAll("_", "") ==
+          "ontheway");
+      if (onTheWayIndex >= 0) {
         debugPrint("ON THE WAY :${bookingStatusList[onTheWayIndex].slug}");
-        appFonts.ontheway  = bookingStatusList[onTheWayIndex].slug!;
+        appFonts.ontheway = bookingStatusList[onTheWayIndex].slug!;
       }
 
-      int onGoingIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "ongoing");
-      if(onGoingIndex >=0){
+      int onGoingIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+              .toLowerCase()
+              .replaceAll("-", "")
+              .replaceAll(" ", "")
+              .replaceAll("_", "") ==
+          "ongoing");
+      if (onGoingIndex >= 0) {
         debugPrint("ONGOING :${bookingStatusList[onGoingIndex].slug}");
-        appFonts.onGoing  = bookingStatusList[onGoingIndex].slug!;
+        appFonts.onGoing = bookingStatusList[onGoingIndex].slug!;
       }
 
-      int onHoldIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "onhold");
-      if(onHoldIndex >=0){
+      int onHoldIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+              .toLowerCase()
+              .replaceAll("-", "")
+              .replaceAll(" ", "")
+              .replaceAll("_", "") ==
+          "onhold");
+      if (onHoldIndex >= 0) {
         debugPrint("onHOLD :${bookingStatusList[onHoldIndex].slug}");
-        appFonts.onHold  = bookingStatusList[onHoldIndex].slug!;
+        appFonts.onHold = bookingStatusList[onHoldIndex].slug!;
       }
 
-      int restartIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "restart");
-      if(restartIndex >=0){
+      int restartIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+              .toLowerCase()
+              .replaceAll("-", "")
+              .replaceAll(" ", "")
+              .replaceAll("_", "") ==
+          "restart");
+      if (restartIndex >= 0) {
         debugPrint("RESTART :${bookingStatusList[restartIndex].slug}");
-        appFonts.restart  = bookingStatusList[restartIndex].slug!;
+        appFonts.restart = bookingStatusList[restartIndex].slug!;
       }
 
-      int startAgainIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "startagain");
-      if(startAgainIndex >=0){
+      int startAgainIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+              .toLowerCase()
+              .replaceAll("-", "")
+              .replaceAll(" ", "")
+              .replaceAll("_", "") ==
+          "startagain");
+      if (startAgainIndex >= 0) {
         debugPrint("START AGAIN :${bookingStatusList[startAgainIndex].slug}");
-        appFonts.startAgain  = bookingStatusList[startAgainIndex].slug!;
+        appFonts.startAgain = bookingStatusList[startAgainIndex].slug!;
       }
 
-      int completedIndex = bookingStatusList.indexWhere((element) => element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "completed" ||element.slug!.toLowerCase().replaceAll("-", "").replaceAll(" ", "").replaceAll("_", "") == "complete");
-      if(completedIndex >=0){
+      int completedIndex = bookingStatusList.indexWhere((element) =>
+          element.slug!
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", "")
+                  .replaceAll("_", "") ==
+              "completed" ||
+          element.slug!
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", "")
+                  .replaceAll("_", "") ==
+              "complete");
+      if (completedIndex >= 0) {
         debugPrint("COMPLETED:${bookingStatusList[completedIndex].slug}");
-        appFonts.completed  = bookingStatusList[completedIndex].slug!;
+        appFonts.completed = bookingStatusList[completedIndex].slug!;
       }
 
       notifyListeners();
-
 
       debugPrint("APPP ;${appFonts.ontheway}");
     } catch (e) {
@@ -628,11 +705,11 @@ class DashboardProvider with ChangeNotifier {
             booking.notifyListeners();
           }
           if (booking.bookingList.isEmpty) {
-            if(search != null) {
+            if (search != null) {
               isSearchData = true;
               booking.searchText.text = "";
               booking.notifyListeners();
-            }else {
+            } else {
               isSearchData = false;
             }
           } else {
@@ -643,9 +720,73 @@ class DashboardProvider with ChangeNotifier {
           booking.bookingList = [];
           booking.notifyListeners();
         }
+        if (booking.bookingList.isEmpty) {
+          clearChat(context);
+        }
+      });
+      log("booking.bookingList :${booking.bookingList.length}");
+    } catch (e) {
+      debugPrint("EEEE getBookingHistory ::$e");
+      notifyListeners();
+    }
+  }
+
+  clearChat(context) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(collectionName.users)
+          .doc(userModel!.id.toString())
+          .collection(collectionName.chats)
+          .get()
+          .then((value) {
+        if (value.docs.isNotEmpty) {
+          value.docs.asMap().entries.forEach((element) {
+            FirebaseFirestore.instance
+                .collection(collectionName.users)
+                .doc(userModel!.id.toString())
+                .collection(collectionName.chatWith)
+                .doc(userModel!.id.toString() ==
+                        element.value['senderId'].toString()
+                    ? element.value['receiverId'].toString()
+                    : element.value['senderId'].toString())
+                .collection(collectionName.booking)
+                .doc(element.value['bookingId'].toString())
+                .collection(collectionName.chat)
+                .get()
+                .then((v) {
+              for (var d in v.docs) {
+                FirebaseFirestore.instance
+                    .collection(collectionName.users)
+                    .doc(userModel!.id.toString())
+                    .collection(collectionName.chatWith)
+                    .doc(userModel!.id.toString() ==
+                            element.value['senderId'].toString()
+                        ? element.value['receiverId'].toString()
+                        : element.value['senderId'].toString())
+                    .collection(collectionName.booking)
+                    .doc(element.value['bookingId'].toString())
+                    .collection(collectionName.chat)
+                    .doc(d.id)
+                    .delete();
+              }
+            }).then((a) {
+              FirebaseFirestore.instance
+                  .collection(collectionName.users)
+                  .doc(userModel!.id.toString())
+                  .collection(collectionName.chats)
+                  .doc(value.docs[0].id)
+                  .delete();
+            }).then((value) {
+              final chat =
+                  Provider.of<ChatHistoryProvider>(context, listen: false);
+              chat.onReady(context);
+            });
+          });
+        }
+
+        notifyListeners();
       });
     } catch (e) {
-      debugPrint("getBookingHistory ::$e");
       notifyListeners();
     }
   }
@@ -654,14 +795,15 @@ class DashboardProvider with ChangeNotifier {
     if (inCart) {
       route.pushNamed(context, routeName.cartScreen);
     } else {
-      final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
+      /* final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
       ProviderModel provider =
-          await commonApi.getProviderById(services!.userId);
-      final providerDetail = Provider.of<ProviderDetailsProvider>(context, listen: false);
+          await commonApi.getProviderById(services!.userId);*/
+      final providerDetail =
+          Provider.of<ProviderDetailsProvider>(context, listen: false);
       providerDetail.selectProviderIndex = 0;
       providerDetail.notifyListeners();
-      onBook(context, services,
-              provider: provider,
+      onBook(context, services!,
+              // provider: provider,
               addTap: () => onAdd(id),
               minusTap: () => onRemoveService(context, id))!
           .then((e) {

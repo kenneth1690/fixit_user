@@ -4,17 +4,17 @@ import '../config.dart';
 class ServicePackageModel {
   int? id;
   String? title;
-  String? price;
+  double? price;
   String? description;
-  String? discount;
-  String? status;
+  int? discount;
+  int? status;
   String? hexaCode;
-  String? isFeatured;
+  int? isFeatured;
   String? slug;
   String? metaTitle;
   String? metaDescription;
-  String? providerId;
-  String? createdById;
+  int? providerId;
+  int? createdById;
   String? deletedAt;
   String? createdAt;
   String? updatedAt;
@@ -45,7 +45,7 @@ class ServicePackageModel {
   ServicePackageModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    price = json['price'];
+    price = json['price'] != null ? double.parse(json['price'].toString()):null;
     description = json['description'];
     discount = json['discount'];
     status = json['status'];

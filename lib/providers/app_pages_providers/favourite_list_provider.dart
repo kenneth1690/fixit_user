@@ -108,7 +108,7 @@ class FavouriteListProvider with ChangeNotifier {
       } catch (e) {
         hideLoading(context);
         notifyListeners();
-        log("CATCH : $e");
+        log("CATCH addToFav: $e");
       }
     }
   }
@@ -169,19 +169,17 @@ class FavouriteListProvider with ChangeNotifier {
       getFavourite();
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH deleteToFav: $e");
     }
   }
 
   onFeatured(context, Services? services, id) async {
-    final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
-    ProviderModel provider = await commonApi.getProviderById(services!.userId);
     final providerDetail =
         Provider.of<ProviderDetailsProvider>(context, listen: false);
     providerDetail.selectProviderIndex = 0;
     providerDetail.notifyListeners();
-    onBook(context, services,
-            provider: provider,
+    onBook(context, services!,
+
             addTap: () => onAdd(id: id),
             minusTap: () => onRemoveService(context, id: id))!
         .then((e) {
@@ -192,14 +190,14 @@ class FavouriteListProvider with ChangeNotifier {
   }
 
   onRemoveService(context, {id}) async {
-    if (int.parse(serviceFavList[id].service!.selectedRequiredServiceMan!) ==
+    if ((serviceFavList[id].service!.selectedRequiredServiceMan!) ==
         1) {
       route.pop(context);
       isAlert = false;
       notifyListeners();
     } else {
-      if (int.parse(serviceFavList[id].service!.requiredServicemen!) ==
-          int.parse(serviceFavList[id].service!.selectedRequiredServiceMan!)) {
+      if ((serviceFavList[id].service!.requiredServicemen!) ==
+          (serviceFavList[id].service!.selectedRequiredServiceMan!)) {
         isAlert = true;
         notifyListeners();
         await Future.delayed(DurationClass.s3);
@@ -208,10 +206,10 @@ class FavouriteListProvider with ChangeNotifier {
       } else {
         isAlert = false;
         notifyListeners();
-        serviceFavList[id].service!.selectedRequiredServiceMan = (int.parse(
+        serviceFavList[id].service!.selectedRequiredServiceMan = ((
                     serviceFavList[id].service!.selectedRequiredServiceMan!) -
                 1)
-            .toString();
+            ;
       }
     }
     notifyListeners();
@@ -221,9 +219,9 @@ class FavouriteListProvider with ChangeNotifier {
     isAlert = false;
     notifyListeners();
     int count =
-        int.parse(serviceFavList[id].service!.selectedRequiredServiceMan!);
+        (serviceFavList[id].service!.selectedRequiredServiceMan!);
     count++;
-    serviceFavList[id].service!.selectedRequiredServiceMan = count.toString();
+    serviceFavList[id].service!.selectedRequiredServiceMan = count;
     notifyListeners();
   }
 }

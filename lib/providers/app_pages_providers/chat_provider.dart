@@ -32,31 +32,32 @@ class ChatProvider with ChangeNotifier {
   BookingModel? booking;
 
   onReady(context) async {
-    showLoading(context);
-    notifyListeners();
-    chatId = "0";
-    messageSub = null;
-    allMessages = [];
-    localMessage = [];
+    try{
+      showLoading(context);
+      notifyListeners();
+      chatId = "0";
+      messageSub = null;
+      allMessages = [];
+      localMessage = [];
 
-    dynamic data = ModalRoute.of(context)!.settings.arguments ?? "";
-    if (data != "") {
-      userId = data['userId'];
-      name = data['name'];
-      image = data['image'];
-      role = data['role'];
-      token = data['token'];
-      phone = data['phone'];
-      code = data['code'];
-      bookingId = data['bookingId'].toString();
+      dynamic data = ModalRoute.of(context)!.settings.arguments ?? "";
+      if (data != "") {
+        userId = int.parse(data['userId']);
+        name = data['name'];
+        image = data['image'];
+        role = data['role'];
+        token = data['token'];
+        phone = data['phone'].toString();
+        code = data['code'];
+        bookingId = data['bookingId'].toString();
+      }
+      chatId = bookingId;
+      await Future.wait([getBookingDetailBy(context),getChatData(context) ]);
+      notifyListeners();
+      log("BOOKINGID :$chatId");
+    }catch(e){
+      log("EEEE onREADY CHAT : $e");
     }
-    chatId = bookingId;
-    //bookingId = booking!.id;
-
-    await Future.wait([getBookingDetailBy(context),getChatData(context) ]);
-    notifyListeners();
-
-    log("BOOKINGID :$chatId");
   }
 
   //booking detail by id
@@ -76,7 +77,7 @@ class ChatProvider with ChangeNotifier {
         }
         int index = booking!.servicemen!.indexWhere((element) => element.id.toString() == userId.toString());
         if(index >= 0){
-          phone = booking!.servicemen![index].phone;
+          phone = booking!.servicemen![index].phone.toString();
           token = booking!.servicemen![index].fcmToken;
           code = booking!.servicemen![index].code;
         }
@@ -90,6 +91,7 @@ class ChatProvider with ChangeNotifier {
   }
 
   onBack(context, isBack) {
+    hideLoading(context);
     allMessages = [];
     localMessage = [];
     messageSub = null;
@@ -419,6 +421,7 @@ log("allMessages :$allMessages");
   void setMessage(String content, MessageType type, context) async {
     // isLoading = true;
     if (content.trim() != '') {
+
       String time = DateTime.now().millisecondsSinceEpoch.toString();
       MessageModel messageModel = MessageModel(
         chatId: chatId,
@@ -438,6 +441,7 @@ log("allMessages :$allMessages");
         senderName: userModel!.name,
         role: "user",
       );
+      controller.text = "";
       bool isEmpty =
           localMessage.where((element) => element.time == "Today").isEmpty;
       if (isEmpty) {
@@ -523,7 +527,7 @@ log("allMessages :$allMessages");
             role: "user",);
         });
       }).then((value)async {
-        controller.text = "";
+
         notifyListeners();
         getChatData(context);
 log("userModel!.name${userModel!.id}");

@@ -49,7 +49,7 @@ class ExtraServiceAddBilling extends StatelessWidget {
                       title:
                           "Extra service charge(${e.value.perServiceAmount} × ${e.value.noServiceDone})",
                       price:
-                          "+${getSymbol(context)}${double.parse(e.value.noServiceDone!) * (currency(context).currencyVal * double.parse(e.value.perServiceAmount!)).ceilToDouble()}",
+                          "+${getSymbol(context)}${(e.value.noServiceDone ??1) * (currency(context).currencyVal * e.value.perServiceAmount!).ceilToDouble()}",
                       style: appCss.dmDenseBold14
                           .textColor(appColor(context).green))
                   .paddingOnly(bottom: Insets.i20)),
@@ -72,11 +72,11 @@ class ExtraServiceAddBilling extends StatelessWidget {
                       title:
                           "Extra service charge(${e.value.perServiceAmount} × ${e.value.noServiceDone})",
                       price:
-                          "+${getSymbol(context)}${double.parse(e.value.noServiceDone!) * (currency(context).currencyVal * double.parse(e.value.perServiceAmount!)).ceilToDouble()}",
+                          "+${getSymbol(context)}${(e.value.noServiceDone ??1) * (currency(context).currencyVal * e.value.perServiceAmount!).ceilToDouble()}",
                       style: appCss.dmDenseBold14
                           .textColor(appColor(context).green))
                   .paddingOnly(bottom: Insets.i20)),
-          if (booking!.paymentMethod != "cash_")
+          if (booking!.paymentMethod != "on_hand")
             BillRowCommon(
                 title: appFonts.advancePaid,
                 price:

@@ -62,7 +62,7 @@ class AppSettingProvider with ChangeNotifier {
     final currencyData =
     Provider.of<CurrencyProvider>(context, listen: false);
     currencyData.currency = data;
-    currencyData.currencyVal = double.parse(data.exchangeRate!);
+    currencyData.currencyVal = data.exchangeRate!;
 
     currencyData.notifyListeners();
     route.pop(context);

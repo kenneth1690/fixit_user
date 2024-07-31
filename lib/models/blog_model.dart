@@ -8,9 +8,9 @@ class BlogModel {
   String? content;
   String? metaTitle;
   String? metaDescription;
-  String? isFeatured;
-  String? status;
-  String? createdById;
+  int? isFeatured;
+  int? status;
+  int? createdById;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -129,7 +129,6 @@ class CreatedBy {
   int? id;
   String? name;
   String? email;
-  String? systemReserve;
   String? phone;
   String? code;
   String? providerId;
@@ -149,7 +148,6 @@ class CreatedBy {
       {this.id,
         this.name,
         this.email,
-        this.systemReserve,
         this.phone,
         this.code,
         this.providerId,
@@ -169,15 +167,14 @@ class CreatedBy {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    systemReserve = json['system_reserve'];
-    phone = json['phone'];
+    phone = json['phone']?.toString();
     code = json['code'];
-    providerId = json['provider_id'];
-    status = json['status'];
-    isFeatured = json['is_featured'];
+    providerId = json['provider_id']?.toString();
+    status = json['status']?.toString();
+    isFeatured = json['is_featured']?.toString();
     type = json['type'];
-    emailVerifiedAt = json['email_verified_at'];
-    createdBy = json['created_by'];
+    emailVerifiedAt = json['email_verified_at']?.toString();
+    createdBy = json['created_by']?.toString();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
@@ -198,7 +195,6 @@ class CreatedBy {
     data['id'] = id;
     data['name'] = name;
     data['email'] = email;
-    data['system_reserve'] = systemReserve;
     data['phone'] = phone;
     data['code'] = code;
     data['provider_id'] = providerId;
@@ -251,7 +247,7 @@ class Tags {
     slug = json['slug'];
     type = json['type'];
     description = json['description'];
-    createdById = json['created_by_id'];
+    createdById = json['created_by_id']?.toString();
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

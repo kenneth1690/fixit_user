@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -20,6 +22,7 @@ class ServiceImageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("ISFA :$isFav");
     return Stack(children: [
       Stack(children: [
         /*  Container(

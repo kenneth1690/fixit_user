@@ -114,7 +114,7 @@ class ServiceSelectUserStepOne extends StatelessWidget {
                         Text(language(context, appFonts.selectedServicemen),
                             style: appCss.dmDenseMedium14.textColor(
                                 appColor(context).darkText)),
-                        if (int.parse(value
+                        if ((value
                                 .servicesCart!.selectedRequiredServiceMan!) !=
                             value.servicesCart!.selectedServiceMan!.length)
                           Row(children: [
@@ -163,7 +163,7 @@ class ServiceSelectUserStepOne extends StatelessWidget {
                             rate: e.value.reviewRatings != null
                                 ? e.value.reviewRatings.toString()
                                 : "0",
-                            exp: e.value.experienceDuration ?? "0",
+                            exp: e.value.experienceDuration != null ? e.value.experienceDuration.toString():"0",
                             expYear: e.value.experienceInterval ?? "Year",
                             editTap: () => route.pushNamed(
                                     context, routeName.servicemanListScreen,

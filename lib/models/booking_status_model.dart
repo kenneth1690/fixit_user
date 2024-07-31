@@ -4,11 +4,10 @@ class BookingStatusModel {
   String? name;
   String? hexaCode;
   String? slug;
-  String? sequence;
+  int? sequence;
   String? description;
-  String? createdById;
-  String? systemReserve;
-  String? status;
+
+  int? status;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -20,8 +19,7 @@ class BookingStatusModel {
         this.slug,
         this.sequence,
         this.description,
-        this.createdById,
-        this.systemReserve,
+
         this.status,
         this.createdAt,
         this.updatedAt,
@@ -34,8 +32,7 @@ class BookingStatusModel {
     slug = json['slug'];
     sequence = json['sequence'];
     description = json['description'];
-    createdById = json['created_by_id'];
-    systemReserve = json['system_reserve'];
+
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -50,8 +47,7 @@ class BookingStatusModel {
     data['slug'] = slug;
     data['sequence'] = sequence;
     data['description'] = description;
-    data['created_by_id'] = createdById;
-    data['system_reserve'] = systemReserve;
+
     data['status'] = status;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;

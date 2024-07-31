@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit_user/models/app_setting_model.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 import '../../config.dart';
@@ -28,6 +30,15 @@ class SplashProvider extends ChangeNotifier {
     if(isAvailable) {
       getAppSettingList(context);
       getPaymentMethodList(context);
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      dynamic userData = pref.getString(session.user);
+      final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
+      bool isAuthenticate = false;
+      if (userData != null) {
+        isAuthenticate = await commonApi.checkForAuthenticate();
+      }
+
+      log("isAuthenticate :$isAuthenticate");
       controller =
           controller =
       AnimationController(vsync: sync, duration: const Duration(seconds: 2))
@@ -82,7 +93,7 @@ class SplashProvider extends ChangeNotifier {
         popUpAnimationController!.forward();
         notifyListeners();
       });
-      SharedPreferences pref = await SharedPreferences.getInstance();
+
       log("ANIMATION CON ${popUpAnimationController!.status}");
       final dashCtrl = Provider.of<DashboardProvider>(context, listen: false);
 
@@ -102,7 +113,7 @@ class SplashProvider extends ChangeNotifier {
       await locationCtrl.getUserCurrentLocation(context);
       final search = Provider.of<SearchProvider>(context, listen: false);
       search.loadImage1();
-      dynamic userData = pref.getString(session.user);
+
       if (userData != null) {
         pref.remove(session.isContinueAsGuest);
         final commonApi =
@@ -124,23 +135,51 @@ class SplashProvider extends ChangeNotifier {
 
         final wallet =
         Provider.of<WalletProvider>(context, listen: false);
-        wallet.getWalletList();
+        wallet.getWalletList(context);
+        final review =
+        Provider.of<MyReviewProvider>(context, listen: false);
+        review.getMyReview(context);
       }
 
       Timer(const Duration(seconds:5), () async {
+        await locationCtrl.getZoneId();
         bool? isIntro = pref.getBool(session.isIntro) ?? false;
 
         log("userData :: $userData");
-        onDispose();
-        Provider.of<SplashProvider>(context, listen: false).dispose();
 
-        await locationCtrl.getZoneId();
+        Provider.of<SplashProvider>(context, listen: false).dispose();
+        onDispose();
+
         dashCtrl.getCategory();
         dashCtrl.getServicePackage();
-
+        log("userData :: 1$userData");
         if (isIntro) {
           if (userData != null) {
-            route.pushReplacementNamed(context, routeName.dashboard);
+            if(isAuthenticate) {
+              route.pushReplacementNamed(context, routeName.dashboard);
+            }else{
+              userModel =null;
+              setPrimaryAddress = null;
+              userPrimaryAddress = null;
+              final dash = Provider.of<DashboardProvider>(context, listen: false);
+              dash.selectIndex =0;
+              dash.notifyListeners();
+              pref.remove(session.user);
+              pref.remove(session.accessToken);
+              pref.remove(session.isContinueAsGuest);
+              pref.remove(session.isLogin);
+              pref.remove(session.cart);
+              pref.remove(session.recentSearch);
+
+
+              final auth = FirebaseAuth.instance.currentUser;
+              if(auth != null){
+                FirebaseAuth.instance.signOut();
+                GoogleSignIn().disconnect();
+              }
+
+              route.pushReplacementNamed(context, routeName.login);
+            }
           } else {
             route.pushReplacementNamed(context, routeName.login);
           }
@@ -168,7 +207,7 @@ class SplashProvider extends ChangeNotifier {
         notifyListeners();
       });
     } catch (e) {
-      log("EEEE getAppSettingList$e");
+      log("EEEE getAppSettingList $e");
       notifyListeners();
     }
   }
@@ -201,7 +240,7 @@ class SplashProvider extends ChangeNotifier {
     final currencyData =
     Provider.of<CurrencyProvider>(context, listen: false);
     currencyData.currency = data;
-    currencyData.currencyVal = double.parse(data.exchangeRate!);
+    currencyData.currencyVal = data.exchangeRate!;
 
     currencyData.notifyListeners();
     log("currency(context).priceSymbol : ${currency(context).priceSymbol}");

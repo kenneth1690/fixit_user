@@ -55,14 +55,11 @@ class CountryListPickCustomState extends State<CountryListPickCustom> {
   void initState() {
     elements = element;
     setState(() {});
-
+log("widget.initialSelection:${widget.initialSelection}");
     if (widget.initialSelection != null) {
-      selectedItem = elements.firstWhere(
-              (e) =>
-          (e.code?.toUpperCase() ==
-              widget.initialSelection!.toUpperCase()) ||
-              (e.dialCode == widget.initialSelection),
-          orElse: () => elements[0] as CountryCodeCustom);
+      selectedItem = elements.firstWhere((e) {
+        return (e.dialCode == "${widget.initialSelection!.contains("+") ?"" :"+"}${widget.initialSelection}");
+      }, orElse: () => elements[0] as CountryCodeCustom);
     } else {
       selectedItem = elements[0];
 

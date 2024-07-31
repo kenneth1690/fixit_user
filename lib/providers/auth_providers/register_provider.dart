@@ -78,7 +78,7 @@ class RegisterProvider extends ChangeNotifier {
       } catch (e) {
         hideLoading(context);
         notifyListeners();
-        log("CATCH : $e");
+        log("CATCH signUp: $e");
       }
     }
   }

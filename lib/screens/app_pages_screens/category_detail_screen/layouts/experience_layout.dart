@@ -67,7 +67,7 @@ class ExperienceLayout extends StatelessWidget {
                     color: appColor(context).lightText)
                 .paddingSymmetric(horizontal: Insets.i5),
 
-            Text("${data!.served} ${language(context, appFonts.served)}",
+            Text("${data!.served ?? 0} ${language(context, appFonts.served)}",
                 style: appCss.dmDenseMedium12
                     .textColor(appColor(context).darkText))
           ])),

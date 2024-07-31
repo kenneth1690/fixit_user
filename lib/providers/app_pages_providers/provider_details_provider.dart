@@ -79,13 +79,13 @@ onBack(context, isBack){
 
 
   onRemoveService(context, index) async{
-    if (int.parse(serviceList[index].selectedRequiredServiceMan!) == 1) {
+    if ((serviceList[index].selectedRequiredServiceMan!) == 1) {
       route.pop(context);
       isAlert = false;
       notifyListeners();
     } else {
-      if (int.parse(serviceList[index].requiredServicemen!) ==
-          int.parse(serviceList[index].selectedRequiredServiceMan!)) {
+      if ((serviceList[index].requiredServicemen!) ==
+          (serviceList[index].selectedRequiredServiceMan!)) {
         isAlert = true;
         notifyListeners();
         await Future.delayed(DurationClass.s3);
@@ -96,7 +96,7 @@ onBack(context, isBack){
         isAlert = false;
         notifyListeners();
         serviceList[index].selectedRequiredServiceMan =
-            (int.parse(serviceList[index].selectedRequiredServiceMan!) - 1).toString();
+            ((serviceList[index].selectedRequiredServiceMan!) - 1);
       }
 
     }
@@ -106,9 +106,9 @@ onBack(context, isBack){
   onAdd(index) {
     isAlert = false;
     notifyListeners();
-    int count = int.parse(serviceList[index].selectedRequiredServiceMan!);
+    int count = (serviceList[index].selectedRequiredServiceMan!);
     count++;
-    serviceList[index].selectedRequiredServiceMan = count.toString();
+    serviceList[index].selectedRequiredServiceMan = count;
 log("CCCC");
     notifyListeners();
   }

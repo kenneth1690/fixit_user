@@ -91,7 +91,7 @@ class ServiceSelectProvider with ChangeNotifier {
   }
 
   onNext(context) {
-    if (int.parse(servicesCart!.selectedRequiredServiceMan!) ==
+    if ((servicesCart!.selectedRequiredServiceMan!) ==
         (servicesCart!.selectedServiceMan != null
             ? servicesCart!.selectedServiceMan!.length
             : 1)) {
@@ -152,14 +152,14 @@ class ServiceSelectProvider with ChangeNotifier {
     servicesCart = data['selectServicesCart'];
     log("data : ${servicesCart!.selectServiceManType}");
     servicesCart!.selectedRequiredServiceMan =
-        servicesCart!.selectedRequiredServiceMan ?? "1";
+        servicesCart!.selectedRequiredServiceMan ?? 1;
     isPackage = data['isPackage'] ?? false;
     selectProviderIndex = data['selectProviderIndex'] ?? 0;
     notifyListeners();
     final locationCtrl = Provider.of<LocationProvider>(context, listen: false);
     if (locationCtrl.addressList.isNotEmpty) {
       int index = locationCtrl.addressList
-          .indexWhere((element) => element.isPrimary == "1");
+          .indexWhere((element) => element.isPrimary == 1);
       if (index > 0) {
         address = locationCtrl.addressList[index];
       } else {
@@ -211,7 +211,7 @@ class ServiceSelectProvider with ChangeNotifier {
             .getApi(api.isValidTimeSlot, data, isData: true, isToken: true)
             .then((value) async {
           if (value.isSuccess!) {
-            log("DDAA :${value.data}");
+            log("DDAA `:${value.data}");
             if (value.data['isValidTimeSlot'] == true) {
               isValid = true;
               return true;

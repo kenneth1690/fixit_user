@@ -42,7 +42,7 @@ class ForgetPasswordProvider with ChangeNotifier {
     } catch (e) {
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH forgetPassword: $e");
     }
   }
 }

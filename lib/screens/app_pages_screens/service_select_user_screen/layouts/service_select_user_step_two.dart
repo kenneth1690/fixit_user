@@ -54,7 +54,7 @@ class ServiceSelectUserStepTwo extends StatelessWidget {
                                     rate: e.value.reviewRatings != null
                                         ? e.value.reviewRatings.toString()
                                         : "0",
-                                    exp: e.value.experienceDuration ?? "0",
+                                    exp: e.value.experienceDuration != null ? e.value.experienceDuration.toString():"0",
                                     expYear:
                                         e.value.experienceInterval ?? "Year",
                                     editTap: () => route.pushNamed(context,
@@ -111,12 +111,12 @@ class ServiceSelectUserStepTwo extends StatelessWidget {
                             BillRowCommon(
                                 title: appFonts.perServiceCharge,
                                 price:
-                                    "${getSymbol(context)}${(currency(context).currencyVal * double.parse(value.servicesCart!.serviceRate!).floorToDouble())}"),
+                                    "${getSymbol(context)}${(currency(context).currencyVal * (value.servicesCart!.serviceRate!).floorToDouble())}"),
                             BillRowCommon(
                                     title:
-                                        "\$${value.servicesCart!.selectedRequiredServiceMan} servicemen (${getSymbol(context)}${(currency(context).currencyVal * double.parse(value.servicesCart!.serviceRate!).floorToDouble()) * double.parse(value.servicesCart!.selectedRequiredServiceMan!)})",
+                                        "\$${value.servicesCart!.selectedRequiredServiceMan} servicemen (${getSymbol(context)}${(currency(context).currencyVal * (value.servicesCart!.serviceRate!).floorToDouble()) * (value.servicesCart!.selectedRequiredServiceMan!)})",
                                     price:
-                                        "${getSymbol(context)}${(currency(context).currencyVal * double.parse(value.servicesCart!.serviceRate!).floorToDouble())}")
+                                        "${getSymbol(context)}${(currency(context).currencyVal * (value.servicesCart!.serviceRate!).floorToDouble())}")
                                 .paddingSymmetric(vertical: Insets.i20),
                             BillRowCommon(
                                 title: appFonts.tax,
@@ -126,7 +126,7 @@ class ServiceSelectUserStepTwo extends StatelessWidget {
                             vertical: Insets.i20,
                           ),
 
-                          VSpace(int.parse(value.servicesCart!
+                          VSpace((value.servicesCart!
                                       .selectedRequiredServiceMan!) >
                                   1
                               ? Sizes.s25
@@ -138,7 +138,7 @@ class ServiceSelectUserStepTwo extends StatelessWidget {
                                     style: appCss.dmDenseMedium14.textColor(
                                         appColor(context).darkText)),
                                 Text(
-                                    "${getSymbol(context)}${(currency(context).currencyVal * double.parse(value.servicesCart!.serviceRate!).floorToDouble()) * double.parse(value.servicesCart!.selectedRequiredServiceMan!)}",
+                                    "${getSymbol(context)}${(currency(context).currencyVal * (value.servicesCart!.serviceRate!).floorToDouble()) * (value.servicesCart!.selectedRequiredServiceMan!)}",
                                     style: appCss.dmDenseBold16.textColor(
                                         appColor(context).primary))
                               ]).paddingSymmetric(

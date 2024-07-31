@@ -154,7 +154,7 @@ class StatusDetailLayout extends StatelessWidget {
                 Expanded(
                     child: Text(
                         data!.consumer != null
-                            ? "${data!.address!.area != null ? "${data!.address!.area}, " : ""}${data!.address!.address}, ${data!.address!.country!.name}, ${data!.address!.state!.name}, ${data!.address!.postalCode}"
+                            ? data!.address == null ? "": "${data!.address!.area != null ? "${data!.address!.area}, " : ""}${data!.address!.address}, ${data!.address!.country!.name}, ${data!.address!.state!.name}, ${data!.address!.postalCode}"
                             : "",
                         overflow: TextOverflow.fade,
                         style: appCss.dmDenseRegular14
@@ -201,7 +201,7 @@ class StatusDetailLayout extends StatelessWidget {
           ]).inkWell(
               onTap: () => route.pushNamed(
                   context, routeName.providerDetailsScreen,
-                  arg: {'provider': data!.provider}))
+                  arg: {'providerId': data!.provider!.id}))
         ]),
         Divider(height: 1, color: appColor(context).stroke)
             .paddingSymmetric(vertical: Insets.i15),
@@ -256,14 +256,15 @@ class StatusDetailLayout extends StatelessWidget {
                     image: eSvgAssets.mail, title: data!.provider!.email!)
                 .inkWell(onTap: () => mailTap(context, data!.provider!.email!)),
             ContactDetailRowCommon(
-                    image: eSvgAssets.phone, title: data!.provider!.phone!)
+                    image: eSvgAssets.phone, title: data!.provider!.phone ??"")
                 .inkWell(
                     onTap: () => launchCall(context, data!.provider!.phone!))
                 .paddingSymmetric(vertical: Insets.i15),
+            if(data!.provider!.primaryAddress != null)
             ContactDetailRowCommon(
                     image: eSvgAssets.locationOut1,
                     title:
-                        "${data!.provider!.primaryAddress!.address}, ${data!.provider!.primaryAddress!.country!.name}, ${data!.provider!.primaryAddress!.state!.name}")
+                    data!.provider!.primaryAddress != null ? "${data!.provider!.primaryAddress!.address}, ${data!.provider!.primaryAddress!.country!.name}, ${data!.provider!.primaryAddress!.state!.name}":"")
                 .inkWell(
                     onTap: () => launchMap(context,
                         "${data!.provider!.primaryAddress!.latitude},${data!.provider!.primaryAddress!.longitude}"))
@@ -371,7 +372,7 @@ class StatusDetailLayout extends StatelessWidget {
                                 data: e.value,
                                 onTap: () {
                                   if (e.value["title"] == appFonts.call) {
-                                    launchCall(context, s.value.phone);
+                                    launchCall(context, s.value.phone.toString());
                                   } else if (e.value["title"] ==
                                       appFonts.chat) {
                                     route.pushNamed(

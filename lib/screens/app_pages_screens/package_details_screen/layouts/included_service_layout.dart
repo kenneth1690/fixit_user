@@ -77,7 +77,7 @@ class IncludedServiceLayout extends StatelessWidget {
                                 appColor(context).darkText)),
                         Text(
                             language(context,
-                                "${getSymbol(context)}${(currency(context).currencyVal * double.parse(data!.serviceRate!)).ceilToDouble()}"),
+                                "${getSymbol(context)}${(currency(context).currencyVal * (data!.serviceRate!)).ceilToDouble()}"),
                             style: appCss.dmDenseSemiBold14.textColor(
                                 appColor(context).darkText)),
                         const VSpace(Sizes.s10),

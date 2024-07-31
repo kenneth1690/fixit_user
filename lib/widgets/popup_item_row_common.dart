@@ -10,13 +10,13 @@ class PopupItemRowCommon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
       SizedBox(
         width: Sizes.s90,
         child: Text(language(context, data),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
             style: appCss.dmDenseMedium12.textColor(appColor(context).darkText))
       ),

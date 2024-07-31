@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../config.dart';
 
 class BottomLocationLayout extends StatelessWidget {
@@ -6,6 +8,7 @@ class BottomLocationLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<LocationProvider>(builder: (context1, value, child) {
+
       return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

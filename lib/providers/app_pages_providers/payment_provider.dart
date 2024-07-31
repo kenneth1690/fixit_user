@@ -135,11 +135,11 @@ class PaymentProvider with ChangeNotifier {
                 final dash =
                     Provider.of<DashboardProvider>(context, listen: false);
                 final common =
-                Provider.of<CommonApiProvider>(context, listen: false);
+                    Provider.of<CommonApiProvider>(context, listen: false);
                 common.selfApi(context);
                 final wallet =
-                Provider.of<WalletProvider>(context, listen: false);
-                wallet.getWalletList();
+                    Provider.of<WalletProvider>(context, listen: false);
+                wallet.getWalletList(context);
                 dash.selectIndex = 1;
                 dash.notifyListeners();
                 //  dash.getBookingHistory(context);
@@ -298,19 +298,23 @@ class PaymentProvider with ChangeNotifier {
   addToCartOrBooking(context) {
     log("bookingId :$bookingId");
     log("bookingIdaa :$method");
-    if (bookingId == 0) {
-      proceedToBook(context);
+    if (isRePayment) {
+      rePayment(context, itemId);
     } else {
-      if (method == "cash") {
-        updateStatus(context, "completed");
-      } else if (method == "wallet") {
-        updateStatus(context, "completed");
+      if (bookingId == 0) {
+        proceedToBook(context);
       } else {
-        log("isRePayment:$isRePayment");
-        if (isRePayment) {
-          rePayment(context, itemId);
+        if (method == "cash") {
+          updateStatus(context, "completed");
+        } else if (method == "wallet") {
+          updateStatus(context, "completed");
         } else {
-          bookingPayment(context);
+          log("isRePayment:$isRePayment");
+          if (isRePayment) {
+            rePayment(context, itemId);
+          } else {
+            bookingPayment(context);
+          }
         }
       }
     }
@@ -425,12 +429,11 @@ class PaymentProvider with ChangeNotifier {
           log("SHHHH :${value.data}");
           if (body["payment_method"] == "cash") {
             onContinue(context);
-          }else if (body["payment_method"] == "wallet") {
+          } else if (body["payment_method"] == "wallet") {
             onContinue(context);
-            final wallet =
-            Provider.of<WalletProvider>(context, listen: false);
-            wallet.getWalletList();
-          }  else {
+            final wallet = Provider.of<WalletProvider>(context, listen: false);
+            wallet.getWalletList(context);
+          } else {
             route
                 .pushNamed(context, routeName.checkoutWebView, arg: value.data)
                 .then((e) async {
@@ -518,6 +521,7 @@ class PaymentProvider with ChangeNotifier {
                                 } else {
                                   route.pop(context);
                                   isRePayment = true;
+                                  bookingId = int.parse(id.toString());
                                   itemId = id.toString();
                                   notifyListeners();
                                 }

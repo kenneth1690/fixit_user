@@ -84,6 +84,38 @@ Future<ProviderModel>  getProviderById(id) async {
 
   }
 
+  Future<bool> checkForAuthenticate() async {
+    bool isAuth=false;
+    try {
+      await apiServices
+          .getApi(api.address, [], isToken: true)
+          .then((value) {
+        log("sdhfjsdkhf :");
+        if (value.isSuccess!) {
+          isAuth = true;
+          notifyListeners();
+          return isAuth;
+        }else{
+          if(value.message.toLowerCase() == "unauthenticated."){
+            isAuth =false;
+            notifyListeners();
+            return isAuth;
+          }else{
+            isAuth =false;
+            notifyListeners();
+            return isAuth;
+          }
+
+        }
+      });
+    } catch (e) {
+      log("EEE homeStatisticApi :$e");
+      return isAuth;
+    }
+    log("isAuth:$isAuth");
+    return isAuth;
+  }
+
   getPaymentMethodList(context) async {
     try {
       await apiServices.getApi(api.paymentMethod, []).then((value) {

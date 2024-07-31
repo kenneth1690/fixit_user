@@ -1,5 +1,7 @@
 String apiUrl = "https://panel.kimiiservicios.com/api";
 String paymentUrl = "https://panel.kimiiservicios.com/api";
+String playstoreUrl = "Your Provider App Google Play Link";
+
 Map<String, String>? headersToken(token) => {
       'Accept': 'application/json',
       'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ class BannerModel {
   int? id;
   String? type;
   String? relatedId;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
   List<Media>? media;
@@ -27,7 +27,7 @@ class BannerModel {
   BannerModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
-    relatedId = json['related_id'];
+    relatedId = json['related_id']?.toString();
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

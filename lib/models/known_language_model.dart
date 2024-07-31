@@ -29,8 +29,8 @@ class KnownLanguagePivot {
   KnownLanguagePivot({this.userId, this.languageId});
 
   KnownLanguagePivot.fromJson(Map<String, dynamic> json) {
-    userId = json['user_id'];
-    languageId = json['language_id'];
+    userId = json['user_id']?.toString();
+    languageId = json['language_id']?.toString();
   }
 
   Map<String, dynamic> toJson() {

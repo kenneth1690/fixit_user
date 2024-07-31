@@ -222,18 +222,26 @@ class LocationProvider with ChangeNotifier {
     }
   }
 
+  onBackMap(context){
+    getDefaultAddress(context);
+  }
+
   getDefaultAddress(context) async {
-    int index = addressList.indexWhere((element) => element.isPrimary == "1");
+    int index = addressList.indexWhere((element) => element.isPrimary == 1);
     log("index :$index");
     if (index >= 0) {
       primaryAddress = index;
       setPrimaryAddress = index;
       userPrimaryAddress = addressList[primaryAddress];
     } else {
+      await getUserCurrentLocation(context);
+
+      getZoneId();
       primaryAddress = 0;
       setPrimaryAddress = null;
       userPrimaryAddress = null;
       currentAddress = null;
+
     }
 
     notifyListeners();
@@ -250,6 +258,7 @@ class LocationProvider with ChangeNotifier {
     } else {}
   }
 
+
 //zone id
   getZoneId() async {
     log("position getZoneId:$position");
@@ -257,12 +266,11 @@ class LocationProvider with ChangeNotifier {
       await apiServices
           .getApi(
               "${api.zoneByPoint}?lat=${position!.latitude}&lng=${position!.longitude}",
-              [],
-              isData: true)
+              [],)
           .then((value) async {
         log("CALUE :${value.data}");
         if (value.isSuccess!) {
-          List o = value.data['data'];
+          List o = value.data;
           String idsString = o.map((obj) => obj['id'].toString()).join(',');
           zoneIds = idsString;
           log("string :$idsString");
@@ -365,7 +373,7 @@ class LocationProvider with ChangeNotifier {
     } catch (e) {
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH deleteAddress: $e");
     }
   }
 
@@ -532,7 +540,7 @@ class LocationProvider with ChangeNotifier {
       log("ARGH :$position");
       notifyListeners();
 
-     // getAddressFromLatLng();
+      getAddressFromLatLng(context);
       notifyListeners();
     } else {
       log("ISSSS");

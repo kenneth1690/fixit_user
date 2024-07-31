@@ -1,0 +1,1 @@
+ H:\\App\\Kimii\\Servcios\\fixit_user\\.dart_tool\\flutter_build\\7e630cae3869634d626de3974d690f28\\native_assets.yaml: 

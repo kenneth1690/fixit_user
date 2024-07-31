@@ -18,9 +18,10 @@ class SplashLayout extends StatelessWidget {
                     height: Sizes.s10,
                     width:  Sizes.s10,
                     duration: const Duration(seconds: 1),
-                    child: null
+                    child: Text("ft",
+                        style: appCss.dmDenseMedium10.textColor(const Color(0xffFFFFFF)))
                 ).decorated(
-                    color: const Color(0xff0277fa),
+                    color: const Color(0xff5465FF),
                     borderRadius: const BorderRadius.all(Radius.circular(AppRadius.r14)))
             ),
           ],

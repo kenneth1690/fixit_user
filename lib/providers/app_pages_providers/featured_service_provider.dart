@@ -86,14 +86,12 @@ class FeaturedServiceProvider with ChangeNotifier {
       route.pop(context);
       route.pushNamed(context, routeName.cartScreen);
     } else {
-      final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
-      ProviderModel provider =
-          await commonApi.getProviderById(services!.userId);
+
       final providerDetail = Provider.of<ProviderDetailsProvider>(context, listen: false);
       providerDetail.selectProviderIndex = 0;
       providerDetail.notifyListeners();
-      onBook(context, services,
-              provider: provider,
+      onBook(context, services!,
+
               addTap: () => onAdd(context, id, isSearch: isSearch),
               minusTap: () => onRemoveService(context, id, isSearch: isSearch))!
           .then((e) {
@@ -106,13 +104,13 @@ class FeaturedServiceProvider with ChangeNotifier {
 
   onRemoveService(context, index, {isSearch = false}) async {
     if (isSearch) {
-      if (int.parse(searchList[index].selectedRequiredServiceMan!) == 1) {
+      if ((searchList[index].selectedRequiredServiceMan!) == 1) {
         route.pop(context);
         isAlert = false;
         notifyListeners();
       } else {
-        if (int.parse(searchList[index].requiredServicemen!) ==
-            int.parse(searchList[index].selectedRequiredServiceMan!)) {
+        if ((searchList[index].requiredServicemen!) ==
+            (searchList[index].selectedRequiredServiceMan!)) {
           isAlert = true;
           notifyListeners();
           await Future.delayed(DurationClass.s3);
@@ -122,8 +120,8 @@ class FeaturedServiceProvider with ChangeNotifier {
           isAlert = false;
           notifyListeners();
           searchList[index].selectedRequiredServiceMan =
-              (int.parse(searchList[index].selectedRequiredServiceMan!) - 1)
-                  .toString();
+              ((searchList[index].selectedRequiredServiceMan!) - 1)
+                  ;
         }
       }
     } else {
@@ -138,9 +136,9 @@ class FeaturedServiceProvider with ChangeNotifier {
     isAlert = false;
     notifyListeners();
     if (isSearch) {
-      int count = int.parse(searchList[index].selectedRequiredServiceMan!);
+      int count = (searchList[index].selectedRequiredServiceMan!);
       count++;
-      searchList[index].selectedRequiredServiceMan = count.toString();
+      searchList[index].selectedRequiredServiceMan = count;
     } else {
       final dash = Provider.of<DashboardProvider>(context, listen: false);
       dash.onAdd(index);

@@ -2,9 +2,8 @@
 import '../../../../config.dart';
 
 class BookYourServiceLayout extends StatelessWidget {
-  final String? price;
+  final double? price;
   final TextStyle? style;
-  final ProviderModel? providerModel;
   final Services? services;
   final int? requiredServiceMan, packageServiceId;
   final GestureTapCallback? minusTap, addTap, onTap;
@@ -14,7 +13,6 @@ class BookYourServiceLayout extends StatelessWidget {
       {super.key,
       this.price,
       this.style,
-      this.providerModel,
       this.requiredServiceMan,
       this.addTap,
       this.minusTap,
@@ -50,7 +48,7 @@ class BookYourServiceLayout extends StatelessWidget {
                                   ? services!.media![0].originalUrl!
                                   : null,
                               price: (int.parse(requiredServiceMan.toString()) *
-                                      double.parse(price!))
+                                  price!)
                                   .toString(),
                               style: style),
                           Text(language(context, appFonts.addRequiredPerson),
@@ -62,7 +60,7 @@ class BookYourServiceLayout extends StatelessWidget {
                               requiredMan: requiredServiceMan,
                               minusTap: minusTap),
                           if (requiredServiceMan! >
-                              int.parse(services!.requiredServicemen??"1"))
+                              (services!.requiredServicemen??1))
                             Text(language(context, appFonts.youWillOnly),
                                     style: appCss.dmDenseMedium12.textColor(
                                         appColor(context).red))
@@ -106,7 +104,7 @@ class BookYourServiceLayout extends StatelessWidget {
                                 service: services,
                                 isPackage: isPackage,
                                 index: packageServiceId,
-                                providerModel: providerModel,
+                                //providerModel: providerModel,
                                 selectProviderIndex: value.selectProviderIndex))
                         .paddingSymmetric(horizontal: Insets.i20)
                   ]).paddingSymmetric(vertical: Insets.i20))

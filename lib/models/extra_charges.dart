@@ -1,12 +1,12 @@
 class ExtraCharges {
   int? id;
   String? title;
-  String? bookingId;
-  String? perServiceAmount;
-  String? noServiceDone;
+  int? bookingId;
+  double? perServiceAmount;
+  int? noServiceDone;
   String? paymentMethod;
   String? paymentStatus;
-  String? total;
+  double? total;
   String? createdAt;
   String? updatedAt;
 
@@ -26,11 +26,11 @@ class ExtraCharges {
     id = json['id'];
     title = json['title'];
     bookingId = json['booking_id'];
-    perServiceAmount = json['per_service_amount'];
+    perServiceAmount = json['per_service_amount'] != null ? double.parse(json['per_service_amount'].toString()):null;
     noServiceDone = json['no_service_done'];
     paymentMethod = json['payment_method'];
     paymentStatus = json['payment_status'];
-    total = json['total'];
+    total = json['total'] != null ? double.parse(json['total'].toString()):null;
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

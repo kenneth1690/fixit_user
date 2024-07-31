@@ -46,13 +46,14 @@ class CategoriesFilterLayout extends StatelessWidget {
                         left: Insets.i20,
                         right: Insets.i20),
 
-                const FiltersBody()
+                const FiltersBody(),
+                    const VSpace(Sizes.s80)
               ]).paddingSymmetric(vertical: Insets.i20),
             ),
             BottomSheetButtonCommon(textOne: appFonts.clearAll,textTwo: appFonts.apply,applyTap: () {
               route.pop(context);
               value.getServiceByCategoryId(context, value.categoryModel!.id);
-            }, clearTap: () => value.clearFilter(context)).alignment(Alignment.bottomCenter)
+            }, clearTap: () => value.clearFilter(context)).backgroundColor(appColor(context).whiteBg).alignment(Alignment.bottomCenter)
           ],
         )).bottomSheetExtension(context);
   }

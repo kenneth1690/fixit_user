@@ -7,10 +7,11 @@ import 'package:dio/dio.dart' as dio;
 import 'package:fixit_user/config.dart';
 import 'package:fixit_user/widgets/alert_message_common.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 //import 'package:rate_my_app/rate_my_app.dart';
 
 class RateAppProvider with ChangeNotifier {
-  int selectedIndex = 3;
+  int selectedIndex = 0;
   bool isServiceRate = false, isServiceManRate = false;
   Reviews? review;
   String? serviceId, serviceManId;
@@ -32,7 +33,7 @@ class RateAppProvider with ChangeNotifier {
         rateService(context);
       } else {
         if (selectedIndex == 4) {
-          //  rateBuilder(context);
+          rateBuilder(context);
           rateApp(context);
         } else {
           route.pushNamed(context, routeName.contactUs,
@@ -45,12 +46,49 @@ class RateAppProvider with ChangeNotifier {
   rateBuilder(context) async {
     /*  LaunchReview.launch(androidAppId: "com.webiots.chatzy",
         iOSAppId: "585027354");*/
-    final InAppReview inAppReview = InAppReview.instance;
+    rateMyApp.init();
+    rateMyApp
+        .showRateDialog(
+      context,
+      title: 'Rate this app',
+      // The dialog title.
+      message:
+          'If you like this app, please take a little bit of your time to review it !\nIt really helps us and it shouldn\'t take you more than one minute.',
+      // The dialog message.
+      rateButton: 'RATE',
+      // The dialog "rate" button text.
+      noButton: 'NO THANKS',
+      // The dialog "no" button text.
+      laterButton: 'MAYBE LATER',
+      // The dialog "later" button text.
+      listener: (button) {
+        // The button click listener (useful if you want to cancel the click event).
+        switch (button) {
+          case RateMyAppDialogButton.rate:
+            print('Clicked on "Rate".');
+            break;
+          case RateMyAppDialogButton.later:
+            print('Clicked on "Later".');
+            break;
+          case RateMyAppDialogButton.no:
+            print('Clicked on "No".');
+            break;
+        }
 
-    inAppReview.openStoreListing(
-      appStoreId: "com.webiots.chatzy",
-      microsoftStoreId: 'com.webiots.chatzy',
-    );
+        return true; // Return false if you want to cancel the click event.
+      },
+      ignoreNativeDialog: Platform.isAndroid,
+      // Set to false if you want to show the Apple's native app rating dialog on iOS or Google's native app rating dialog (depends on the current Platform).
+      dialogStyle: const DialogStyle(),
+      // Custom dialog styles.
+      onDismissed: () => rateMyApp.callEvent(RateMyAppEventType
+          .laterButtonPressed), // Called when the user dismissed the dialog (either by taping outside or by pressing the "back" button).
+      // contentBuilder: (context, defaultContent) => content, // This one allows you to change the default dialog content.
+      // actionsBuilder: (context) => [], // This one allows you to use your own buttons.
+    )
+        .then((value) {
+      log("VALUE ");
+    });
   }
 
   rateApp(context, {data}) async {
@@ -112,8 +150,8 @@ class RateAppProvider with ChangeNotifier {
       log("iSSS:$data");
 
       isServiceRate = data["isServiceRate"];
-      serviceId = data["serviceId"];
-      serviceManId = data["servicemanId"];
+      serviceId = data["serviceId"]?.toString();
+      serviceManId = data["servicemanId"]?.toString();
     }
     log("EEEE :$isServiceRate");
     notifyListeners();
@@ -158,6 +196,9 @@ class RateAppProvider with ChangeNotifier {
                   b1OnTap: () {
                     route.pop(context);
                     route.pop(context);
+                    selectedIndex = 3;
+                    rateController.text = "";
+                    notifyListeners();
                   },
                 );
               });

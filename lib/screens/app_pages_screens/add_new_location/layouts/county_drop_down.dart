@@ -56,7 +56,7 @@ class CountryDropDown extends StatelessWidget {
                   searchController: value.countryCtrl,
                   searchInnerWidgetHeight: Sizes.s50,
                   searchInnerWidget: Container(
-                      height: Sizes.s50,
+                      height: Sizes.s60,
                       padding: const EdgeInsets.only(
                           top: Insets.i8,
                           bottom: Insets.i4,

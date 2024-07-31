@@ -291,6 +291,32 @@ class AppArray {
     },
   ];
 
+
+  var guestProfileList = [
+
+    {
+      "title": appFonts.aboutApp,
+      "data": [
+        {
+          "icon": eSvgAssets.mobile,
+          "title": appFonts.appDetails,
+          "description": appFonts.aboutUs,
+          "isArrow": true
+        },
+        {"icon": eSvgAssets.rate, "title": appFonts.rateUs, "isArrow": false},
+        {
+          "icon": eSvgAssets.share,
+          "title": appFonts.shareApp,
+          "isArrow": false
+        },
+      ]
+    },
+    {
+      "title": appFonts.becomeProvider,
+    }
+   
+  ];
+
   //app setting
   List appSetting(isTheme) => [
         {
@@ -571,7 +597,7 @@ class AppArray {
   ];
 
   var appDetailsList = [
-    {
+   /* {
       "title": appFonts.aboutUs,
       "icon": eSvgAssets.about,
     },
@@ -590,7 +616,7 @@ class AppArray {
     {
       "title": appFonts.helpSupport,
       "icon": eSvgAssets.help,
-    },
+    },*/
   ];
 
   var selectErrorList = [

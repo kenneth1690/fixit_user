@@ -6,21 +6,21 @@ class UserModel {
   int? id;
   String? name;
   String? email;
-  String? systemReserve;
+
   String? served;
   String? phone;
   String? code;
-  String? providerId;
-  String? status;
-  String? isFeatured;
-  String? isVerified;
+  int? providerId;
+  int? status;
+  int? isFeatured;
+  int? isVerified;
   String? type;
   String? emailVerifiedAt;
   String? fcmToken;
   String? experienceInterval;
   String? experienceDuration;
   String? description;
-  String? createdBy;
+  int? createdBy;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -41,7 +41,7 @@ class UserModel {
       {this.id,
         this.name,
         this.email,
-        this.systemReserve,
+
         this.served,
         this.phone,
         this.code,
@@ -71,9 +71,9 @@ class UserModel {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    systemReserve = json['system_reserve'];
+
     served = json['served'];
-    phone = json['phone'];
+    phone = json['phone']?.toString();
     code = json['code'];
     providerId = json['provider_id'];
     status = json['status'];
@@ -131,7 +131,7 @@ class UserModel {
     data['id'] = id;
     data['name'] = name;
     data['email'] = email;
-    data['system_reserve'] = systemReserve;
+
     data['served'] = served;
     data['phone'] = phone;
     data['code'] = code;
@@ -184,7 +184,7 @@ class Role {
   int? id;
   String? name;
   String? guardName;
-  String? systemReserve;
+
   String? createdAt;
   String? updatedAt;
   Pivot? pivot;
@@ -193,7 +193,7 @@ class Role {
       {this.id,
         this.name,
         this.guardName,
-        this.systemReserve,
+
         this.createdAt,
         this.updatedAt,
         this.pivot});
@@ -202,7 +202,7 @@ class Role {
     id = json['id'];
     name = json['name'];
     guardName = json['guard_name'];
-    systemReserve = json['system_reserve'];
+
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     pivot = json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null;
@@ -213,7 +213,7 @@ class Role {
     data['id'] = id;
     data['name'] = name;
     data['guard_name'] = guardName;
-    data['system_reserve'] = systemReserve;
+
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     if (pivot != null) {

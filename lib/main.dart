@@ -1,8 +1,4 @@
 
-
-import 'dart:developer';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fixit_user/helper/notification.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';

@@ -1,15 +1,13 @@
-import 'dart:async';
-import 'package:marquee/marquee.dart' as m;
+import 'package:flutter/material.dart';
 
 import '../../../../config.dart';
-import '../../../../widgets/custom_marquee.dart';
 
 class TopCategoriesLayout extends StatelessWidget {
   final CategoryModel? data;
   final GestureTapCallback? onTap;
   final int? index, selectedIndex;
   final double? rPadding;
-  final bool isCategories;
+  final bool isCategories, isExapnded;
 
   const TopCategoriesLayout(
       {super.key,
@@ -17,7 +15,8 @@ class TopCategoriesLayout extends StatelessWidget {
       this.data,
       this.index,
       this.selectedIndex,
-        this.isCategories = false,
+      this.isCategories = false,
+      this.isExapnded = true,
       this.rPadding});
 
   @override
@@ -30,8 +29,8 @@ class TopCategoriesLayout extends StatelessWidget {
               color: selectedIndex == index
                   ? appColor(context).primary.withOpacity(0.2)
                   : isCategories == true
-                  ? appColor(context).whiteBg
-                  : appColor(context).fieldCardBg,
+                      ? appColor(context).whiteBg
+                      : appColor(context).fieldCardBg,
               shape: SmoothRectangleBorder(
                   side: BorderSide(
                       color: selectedIndex == index
@@ -83,14 +82,27 @@ class TopCategoriesLayout extends StatelessWidget {
                               width: Sizes.s22)
                           .paddingAll(Insets.i18)),
       const VSpace(Sizes.s8),
-
-      Text(data!.title!,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 2,
-          style: appCss.dmDenseRegular13.textColor(selectedIndex == index
-              ? appColor(context).primary
-              : appColor(context).darkText)).width(isCategories ?Sizes.s76:Sizes.s70)
+      if (isExapnded)
+        Expanded(
+          child: Text(data!.title!,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: appCss.dmDenseRegular13.textColor(
+                      selectedIndex == index
+                          ? appColor(context).primary
+                          : appColor(context).darkText))
+              .width(isCategories ? Sizes.s76 : Sizes.s70),
+        ),
+      if (!isExapnded)
+        Text(data!.title!,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: appCss.dmDenseRegular13.textColor(selectedIndex == index
+                    ? appColor(context).primary
+                    : appColor(context).darkText))
+            .width(isCategories ? Sizes.s76 : Sizes.s70)
     ]).inkWell(onTap: onTap);
   }
 }

@@ -26,7 +26,7 @@ class StatusBookingModel {
 
   StatusBookingModel.fromJson(Map<String, dynamic> json) {
     image = json['image'];
-    bookingId = json['bookingId'];
+    bookingId = json['bookingId']?.toString();
     title = json['title'];
     rate = json['rate'];
     status = json['status'];

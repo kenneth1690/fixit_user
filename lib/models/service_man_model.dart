@@ -5,20 +5,20 @@ class ServicemanModel {
   int? id;
   String? name;
   String? email;
-  String? systemReserve;
-  String? phone;
+
+  int? phone;
   String? code;
-  String? providerId;
+  int? providerId;
   String? fcmToken;
   String? description;
-  String? status;
-  String? isFeatured;
-  String? isVerified;
+  int? status;
+  int? isFeatured;
+  int? isVerified;
   String? type;
   String? emailVerifiedAt;
   String? experienceInterval;
-  String? experienceDuration;
-  String? createdBy;
+  int? experienceDuration;
+  int? createdBy;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -37,7 +37,7 @@ class ServicemanModel {
       {this.id,
         this.name,
         this.email,
-        this.systemReserve,
+
         this.phone,
         this.code,
         this.providerId,
@@ -67,7 +67,7 @@ class ServicemanModel {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    systemReserve = json['system_reserve'];
+
     phone = json['phone'];
     code = json['code'];
     fcmToken = json['fcm_token'];
@@ -140,7 +140,7 @@ class ServicemanModel {
     data['id'] = id;
     data['name'] = name;
     data['email'] = email;
-    data['system_reserve'] = systemReserve;
+
     data['phone'] = phone;
     data['code'] = code;
     data['fcm_token'] = fcmToken;
@@ -191,7 +191,7 @@ class Roles {
   int? id;
   String? name;
   String? guardName;
-  String? systemReserve;
+
   String? createdAt;
   String? updatedAt;
   Pivot? pivot;
@@ -200,7 +200,7 @@ class Roles {
       {this.id,
         this.name,
         this.guardName,
-        this.systemReserve,
+
         this.createdAt,
         this.updatedAt,
         this.pivot});
@@ -209,7 +209,6 @@ class Roles {
     id = json['id'];
     name = json['name'];
     guardName = json['guard_name'];
-    systemReserve = json['system_reserve'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     pivot = json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null;
@@ -220,7 +219,7 @@ class Roles {
     data['id'] = id;
     data['name'] = name;
     data['guard_name'] = guardName;
-    data['system_reserve'] = systemReserve;
+
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     if (pivot != null) {

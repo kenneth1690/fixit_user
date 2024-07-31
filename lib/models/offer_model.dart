@@ -4,9 +4,9 @@ class OfferModel {
   int? id;
   String? title;
   String? type;
-  String? isOffer;
+  int? isOffer;
   String? relatedId;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
   List<Media>? media;
@@ -27,7 +27,7 @@ class OfferModel {
     title = json['title'];
     type = json['type'];
     isOffer = json['is_offer'];
-    relatedId = json['related_id'];
+    relatedId = json['related_id']?.toString();
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

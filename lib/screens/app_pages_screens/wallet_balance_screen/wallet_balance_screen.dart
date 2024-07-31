@@ -57,14 +57,14 @@ class _WalletBalanceScreenState extends State<WalletBalanceScreen>
                   ]),
               body: RefreshIndicator(
                 onRefresh: () async {
-                  return value.getWalletList();
+                  return value.getWalletList(context);
                 },
                 child: ListView(children: [
                   const VSpace(Sizes.s20),
                   BalanceLayout(
                     isGuest: value.isGuest,
                           offsetAnimation: _offsetAnimation,
-                          totalBalance :(userModel != null && userModel!.wallet != null && userModel!.wallet!.balance != null) ? userModel!.wallet!.balance.toString() :  value.balance.toString(),
+                          totalBalance : value.balance.toString(),
                           isTap: false)
                       .paddingSymmetric(horizontal: Insets.i20),
                   const VSpace(Sizes.s30),

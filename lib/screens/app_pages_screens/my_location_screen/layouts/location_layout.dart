@@ -44,7 +44,7 @@ class LocationLayout extends StatelessWidget {
             Text(data!.alternativeName ??"",
                 style: appCss.dmDenseMedium14
                     .textColor(appColor(context).darkText)),
-            Text(data!.alternativePhone ??"",
+            Text(data!.alternativePhone != null ?data!.alternativePhone.toString():"" ,
                 style: appCss.dmDenseMedium12
                     .textColor(appColor(context).lightText))
           ])
@@ -76,7 +76,7 @@ class LocationLayout extends StatelessWidget {
         if (isPrimaryAnTapLayout)
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-                "\u2022 ${data!.isPrimary == "1" ? "Set as a primary location" : "Not set as a primary location"}",
+                "\u2022 ${data!.isPrimary == 1 ? "Set as a primary location" : "Not set as a primary location"}",
                 style: appCss.dmDenseMedium12
                     .textColor(appColor(context).lightText)),
             Row(children: [

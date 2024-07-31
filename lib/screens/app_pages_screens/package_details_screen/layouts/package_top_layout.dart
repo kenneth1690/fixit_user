@@ -18,7 +18,7 @@ class PackageTopLayout extends StatelessWidget {
             style: appCss.dmDenseMedium16
                 .textColor(appColor(context).darkText)),
         const VSpace(Sizes.s4),
-        Text("${getSymbol(context)}${currency(context).currencyVal * double.parse(packageModel!.price!)}",
+        Text("${getSymbol(context)}${currency(context).currencyVal * (packageModel!.price ?? 0.0)}",
             style: appCss.dmDenseBold18
                 .textColor(appColor(context).online)),
         Image.asset(eImageAssets.bulletDotted)

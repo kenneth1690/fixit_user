@@ -373,14 +373,12 @@ class SearchProvider with ChangeNotifier {
       route.pop(context);
       route.pushNamed(context, routeName.cartScreen);
     } else {
-      final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
-      ProviderModel provider =
-          await commonApi.getProviderById(services!.userId);
+
       final providerDetail = Provider.of<ProviderDetailsProvider>(context, listen: false);
       providerDetail.selectProviderIndex = 0;
       providerDetail.notifyListeners();
-      onBook(context, services,
-          provider: provider,
+      onBook(context, services!,
+
           addTap: () => onAdd(id),
           minusTap: () => onRemoveService(context, id)).then((e) {
         searchList[id].selectedRequiredServiceMan =
@@ -438,8 +436,8 @@ class SearchProvider with ChangeNotifier {
             if (!serviceList.contains(Services.fromJson(data))) {
               serviceList.add(Services.fromJson(data));
             }
-            if (double.parse(services.price!) > maxPrice) {
-              maxPrice = double.parse(services.price!);
+            if (services.price! > maxPrice) {
+              maxPrice = services.price!;
               log("  :::::::$maxPrice");
             }
 
@@ -458,13 +456,13 @@ class SearchProvider with ChangeNotifier {
   }
 
   onRemoveService(context, index)async {
-    if (int.parse(searchList[index].selectedRequiredServiceMan!) == 1) {
+    if ((searchList[index].selectedRequiredServiceMan!) == 1) {
       route.pop(context);
       isAlert = false;
       notifyListeners();
     } else {
-      if (int.parse(searchList[index].requiredServicemen!) ==
-          int.parse(searchList[index].selectedRequiredServiceMan!)) {
+      if ((searchList[index].requiredServicemen!) ==
+          (searchList[index].selectedRequiredServiceMan!)) {
         isAlert = true;
         notifyListeners();
         await Future.delayed(DurationClass.s3);
@@ -474,10 +472,10 @@ class SearchProvider with ChangeNotifier {
       } else {
         isAlert = false;
         notifyListeners();
-        searchList[index].selectedRequiredServiceMan = (int.parse(
+        searchList[index].selectedRequiredServiceMan = ((
             searchList[index].selectedRequiredServiceMan!) -
             1)
-            .toString();
+            ;
       }
     }
     notifyListeners();
@@ -486,9 +484,9 @@ class SearchProvider with ChangeNotifier {
   onAdd(index) {
     isAlert = false;
     notifyListeners();
-    int count = int.parse(searchList[index].selectedRequiredServiceMan!);
+    int count = (searchList[index].selectedRequiredServiceMan!);
     count++;
-    searchList[index].selectedRequiredServiceMan = count.toString();
+    searchList[index].selectedRequiredServiceMan = count;
 
     notifyListeners();
   }

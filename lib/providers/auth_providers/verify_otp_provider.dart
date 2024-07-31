@@ -78,7 +78,7 @@ class VerifyOtpProvider with ChangeNotifier {
     } catch (e) {
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH verifyOtp: $e");
     }
   }
 
@@ -226,7 +226,7 @@ class VerifyOtpProvider with ChangeNotifier {
     } catch (e) {
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH login: $e");
     }
   }
 }

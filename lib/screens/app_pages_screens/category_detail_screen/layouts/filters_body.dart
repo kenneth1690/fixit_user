@@ -20,12 +20,12 @@ class FiltersBody extends StatelessWidget {
                             style: appCss.dmDenseMedium14.textColor(
                                 appColor(context).lightText))
                         .alignment(Alignment.centerLeft)),
-                Expanded(
-                    child: DropDownLayout(
-                        isIcon: false,
-                        val: value.exValue,
-                        categoryList: appArray.experienceList,
-                        onChanged: (val) => value.onExperience(val)))
+
+                DropDownLayout(
+                    isIcon: false,
+                    val: value.exValue,
+                    categoryList: appArray.experienceList,
+                    onChanged: (val) => value.onExperience(val)).width(Sizes.s180)
               ]).paddingSymmetric(vertical: Insets.i20, horizontal: Insets.i20),
               SearchTextFieldCommon(
                 controller: value.filterSearchCtrl,

@@ -6,24 +6,24 @@ class ProviderModel {
   int? id;
   String? name;
   String? email;
-  String? systemReserve;
+
   String? served;
-  String? phone;
+  int? phone;
   String? code;
   String? providerId;
   String? description;
-  String? status;
-  String? isFeatured;
-  String? isVerified;
+  int? status;
+  int? isFeatured;
+  int? isVerified;
   String? type;
   String? emailVerifiedAt;
   String? experienceInterval;
-  String? experienceDuration;
-  String? createdBy;
+  int? experienceDuration;
+  int? createdBy;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
-  int? reviewRatings;
+  double? reviewRatings;
   int? reviewCount;
   List<CategoryModel>? categories;
   PrimaryAddress? primaryAddress;
@@ -41,7 +41,7 @@ class ProviderModel {
       {this.id,
       this.name,
       this.email,
-      this.systemReserve,
+
       this.served,
       this.phone,
       this.code,
@@ -76,11 +76,11 @@ class ProviderModel {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    systemReserve = json['system_reserve'];
+
     served = json['served'];
     phone = json['phone'];
-    code = json['code'];
-    providerId = json['provider_id'];
+    code = json['code']?.toString();
+    providerId = json['provider_id']?.toString();
     description = json['description'];
     status = json['status'];
     isFeatured = json['is_featured'];
@@ -93,7 +93,7 @@ class ProviderModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
-    reviewRatings = json['review_ratings'];
+    reviewRatings = json['review_ratings'] != null ?double.parse(json['review_ratings'].toString()):null;
     reviewCount = json['reviewCount'];
     if (json['categories'] != null) {
       categories = <CategoryModel>[];
@@ -166,7 +166,7 @@ class ProviderModel {
     data['id'] = id;
     data['name'] = name;
     data['email'] = email;
-    data['system_reserve'] = systemReserve;
+
     data['served'] = served;
     data['phone'] = phone;
     data['code'] = code;

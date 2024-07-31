@@ -7,7 +7,7 @@ class LoginWithPhoneProvider with ChangeNotifier {
   TextEditingController numberController = TextEditingController();
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   bool isCodeSent = false;
-  String dialCode = "+506";
+  String dialCode = "+91";
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FocusNode phoneFocus = FocusNode();
   String? verificationCode;

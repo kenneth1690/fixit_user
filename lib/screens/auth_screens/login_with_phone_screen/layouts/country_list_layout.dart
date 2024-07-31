@@ -297,7 +297,7 @@ List<Map> countriesEnglish = [
   {"name": "Zimbabwe", "dial_code": "+263", "code": "ZW"}
 ];
 
-final List<Map<String, String>> codes = [
+List<Map<String, String>> codes = [
   {
     "name": "افغانستان",
     "code": "AF",
@@ -1545,6 +1545,7 @@ class CountryListLayout extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return  Consumer2<ProfileDetailProvider,RegisterProvider>(builder: (context1, value,register, child) {
+      log("djkhgdfjhg:$dialCode");
         return SizedBox(
                 height: Sizes.s50,
                 child: CountryListPickCustom(
@@ -1575,9 +1576,9 @@ class CountryListLayout extends StatelessWidget {
                     ),
 
                     pickerBuilder: (context, CountryCodeCustom? countryCode) {
-                      log("dialCode:;:${countryCode!.dialCode}");
+
                       return Row(children: [
-                        Image.asset("${countryCode.flagUri}",
+                        Image.asset("${countryCode!.flagUri}",
                             package: 'country_list_pick',
                             width: Sizes.s22,
                             height: Sizes.s16),

@@ -149,7 +149,7 @@ class DefaultLanguage {
   String? appLocale;
   int? isRtl;
   int? status;
-  String? systemReserve;
+
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
@@ -161,7 +161,7 @@ class DefaultLanguage {
         this.appLocale,
         this.isRtl,
         this.status,
-        this.systemReserve,
+
         this.createdAt,
         this.updatedAt,
         this.deletedAt});
@@ -173,7 +173,7 @@ class DefaultLanguage {
     appLocale = json['app_locale'];
     isRtl = json['is_rtl'];
     status = json['status'];
-    systemReserve = json['system_reserve'];
+
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
@@ -187,7 +187,7 @@ class DefaultLanguage {
     data['app_locale'] = appLocale;
     data['is_rtl'] = isRtl;
     data['status'] = status;
-    data['system_reserve'] = systemReserve;
+
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['deleted_at'] = deletedAt;
@@ -199,6 +199,7 @@ class Activation {
   String? cash;
   String? couponEnable;
   String? walletEnable;
+  String? defaultCredentials;
   String? extraChargeStatus;
   String? platformFeesStatus;
   String? serviceAutoApprove;
@@ -208,6 +209,7 @@ class Activation {
       {this.cash,
         this.couponEnable,
         this.walletEnable,
+        this.defaultCredentials,
         this.extraChargeStatus,
         this.platformFeesStatus,
         this.serviceAutoApprove,
@@ -217,6 +219,7 @@ class Activation {
     cash = json['cash'];
     couponEnable = json['coupon_enable'];
     walletEnable = json['wallet_enable'];
+    defaultCredentials = json['default_credentials'];
     extraChargeStatus = json['extra_charge_status'];
     platformFeesStatus = json['platform_fees_status'];
     serviceAutoApprove = json['service_auto_approve'];
@@ -228,6 +231,7 @@ class Activation {
     data['cash'] = cash;
     data['coupon_enable'] = couponEnable;
     data['wallet_enable'] = walletEnable;
+    data['default_credentials'] = defaultCredentials;
     data['extra_charge_status'] = extraChargeStatus;
     data['platform_fees_status'] = platformFeesStatus;
     data['service_auto_approve'] = serviceAutoApprove;

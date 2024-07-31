@@ -47,9 +47,9 @@ onBook(context, Services service,
                        price: service.serviceRate,
                        style: appCss.dmDenseSemiBold18
                            .textColor(appColor(context).primary),
-                       providerModel: provider ?? service.user,
+                       //providerModel: provider ?? service.user,
                        requiredServiceMan:
-                       int.parse(service.selectedRequiredServiceMan ??"1"),
+                       (service.selectedRequiredServiceMan ??1),
                        addTap: addTap,
                        minusTap: minusTap,
                        packageServiceId: packageServiceId,
@@ -82,12 +82,14 @@ commonUrlTap(context, String address,
 }
 
 launchCall(context, String? url) {
-  if (Platform.isIOS) {
-    commonUrlTap(context, '$call//${url!}',
-        launchMode: LaunchMode.externalApplication);
-  } else {
-    commonUrlTap(context, '$call${url!}',
-        launchMode: LaunchMode.externalApplication);
+  if(url != null) {
+    if (Platform.isIOS) {
+      commonUrlTap(context, '$call//$url',
+          launchMode: LaunchMode.externalApplication);
+    } else {
+      commonUrlTap(context, '$call$url',
+          launchMode: LaunchMode.externalApplication);
+    }
   }
 }
 

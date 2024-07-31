@@ -4,9 +4,9 @@ import '../config.dart';
 
 class FavouriteModel {
   int? id;
-  String? consumerId;
-  String? providerId;
-  String? serviceId;
+  int? consumerId;
+  int? providerId;
+  int? serviceId;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;

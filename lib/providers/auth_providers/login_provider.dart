@@ -23,6 +23,12 @@ class LoginProvider with ChangeNotifier {
     }
   }
 
+  demoCreds(){
+    emailController.text = "user@example.com";
+    passwordController.text = "123456789";
+    notifyListeners();
+  }
+
   // password see tap
   passwordSeenTap() {
     isPassword = !isPassword;
@@ -115,20 +121,21 @@ class LoginProvider with ChangeNotifier {
 
   //login
   login(context) async {
-    pref = await SharedPreferences.getInstance();
-    String token = await getFcmToken();
-
-    showLoading(context);
-
-    var body = {
-      "email": emailController.text,
-      "password": passwordController.text,
-      "fcm_token": token
-    };
-
-    log("body : $body");
 
     try {
+      pref = await SharedPreferences.getInstance();
+      String token = await getFcmToken();
+
+      showLoading(context);
+
+      var body = {
+        "email": emailController.text,
+        "password": passwordController.text,
+        "fcm_token": token
+      };
+
+      log("body : $body");
+
       await apiServices
           .postApi(api.login, jsonEncode(body))
           .then((value) async {
@@ -178,7 +185,7 @@ class LoginProvider with ChangeNotifier {
     } catch (e) {
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH login: $e");
     }
   }
 

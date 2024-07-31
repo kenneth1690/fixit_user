@@ -24,8 +24,8 @@ class ServicemanListProvider with ChangeNotifier {
     selectCategory = [];
     dynamic data = ModalRoute.of(context)!.settings.arguments;
     log("data : $data");
-    providerId = data['providerId'];
-    requiredServiceman = data['requiredServiceman'];
+    providerId = data['providerId']!.toString();
+    requiredServiceman = data['requiredServiceman']?.toString();
     List<ProviderModel> serviceList =data['selectedServiceMan']  ??[];
     for(var d in serviceList){
       if (selectCategory.contains(d.id)) {

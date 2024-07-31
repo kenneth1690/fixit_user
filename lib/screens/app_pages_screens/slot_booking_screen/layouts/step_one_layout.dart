@@ -172,9 +172,9 @@ class StepOneLayout extends StatelessWidget {
                         ),
                   const VSpace(Sizes.s15),
                   const ServicemanQuantityLayout(),
-                  if (int.parse(
+                  if ((
                           value.servicesCart!.selectedRequiredServiceMan!) >
-                      int.parse(value.servicesCart!.requiredServicemen ?? "1"))
+                      (value.servicesCart!.requiredServicemen ?? 1))
                     Text(language(context, appFonts.youWillOnly),
                             style: appCss.dmDenseMedium12
                                 .textColor(appColor(context).red))

@@ -54,7 +54,7 @@ class LoginWithPhoneScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CountryListLayout(
-                                  dialCode: "+506",
+                                  dialCode: "+91",
                                     onChanged: (country) =>
                                         value.changeDialCode(country!)),
                                 const HSpace(Sizes.s4),

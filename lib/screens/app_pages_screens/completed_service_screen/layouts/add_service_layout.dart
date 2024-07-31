@@ -15,7 +15,7 @@ class AddServiceLayout extends StatelessWidget {
                   style: appCss.dmDenseMedium14
                       .textColor(appColor(context).darkText)),
               const VSpace(Sizes.s5),
-              Text("${getSymbol(context)}${currency(context).currencyVal * double.parse(e.value.perServiceAmount!)} per service",
+              Text("${getSymbol(context)}${currency(context).currencyVal * (e.value.perServiceAmount ??0.0)} per service",
                   style: appCss.dmDenseMedium14
                       .textColor(appColor(context).primary)),
             ]),
@@ -27,7 +27,7 @@ class AddServiceLayout extends StatelessWidget {
             Text(language(context, appFonts.noServiceDone),
                 style: appCss.dmDenseMedium12
                     .textColor(appColor(context).darkText)),
-            Text(e.value.noServiceDone!,
+            Text(e.value.noServiceDone != null ? e.value.noServiceDone.toString():"0",
                 style: appCss.dmDenseMedium12
                     .textColor(appColor(context).darkText))
           ])

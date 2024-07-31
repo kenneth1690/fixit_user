@@ -67,13 +67,13 @@ class StepTwoLayout extends StatelessWidget {
                     BillRowCommon(
                         title: appFonts.perServiceCharge,
                         price:
-                            "${getSymbol(context)}${(currency(context).currencyVal * double.parse(value.servicesCart!.serviceRate!).ceilToDouble())}"),
+                            "${getSymbol(context)}${(currency(context).currencyVal * (value.servicesCart!.serviceRate!).ceilToDouble())}"),
 
                       BillRowCommon(
                               title:
-                              "${value.servicesCart!.selectedRequiredServiceMan} ${language(context, appFonts.serviceman)} (${getSymbol(context)}${(currency(context).currencyVal * double.parse(value.servicesCart!.serviceRate!)).ceilToDouble()} × ${value.servicesCart!.selectedRequiredServiceMan})",
+                              "${value.servicesCart!.selectedRequiredServiceMan} ${language(context, appFonts.serviceman)} (${getSymbol(context)}${(currency(context).currencyVal * (value.servicesCart!.serviceRate!)).ceilToDouble()} × ${value.servicesCart!.selectedRequiredServiceMan})",
                               price:
-                                  "${getSymbol(context)}${(currency(context).currencyVal * double.parse(value.servicesCart!.serviceRate!).ceilToDouble()) * double.parse(value.servicesCart!.selectedRequiredServiceMan!)}")
+                                  "${getSymbol(context)}${(currency(context).currencyVal * (value.servicesCart!.serviceRate!).ceilToDouble()) * (value.servicesCart!.selectedRequiredServiceMan!)}")
                           .marginOnly(top: Insets.i20),
                     const VSpace(Sizes.s20),
                     BillRowCommon(
@@ -91,7 +91,7 @@ class StepTwoLayout extends StatelessWidget {
                                 style: appCss.dmDenseMedium14.textColor(
                                     appColor(context).darkText)),
                             Text(
-                                "${getSymbol(context)}${(currency(context).currencyVal * double.parse(value.servicesCart!.serviceRate!).ceilToDouble()) * double.parse(value.servicesCart!.selectedRequiredServiceMan!)}",
+                                "${getSymbol(context)}${(currency(context).currencyVal * (value.servicesCart!.serviceRate!).ceilToDouble()) * (value.servicesCart!.selectedRequiredServiceMan!)}",
                                 style: appCss.dmDenseBold16.textColor(
                                     appColor(context).primary))
                           ]).paddingSymmetric(horizontal: Insets.i15),

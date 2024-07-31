@@ -32,7 +32,16 @@ class RotationAnimationLayout extends StatelessWidget {
                     )
                   )
                 ),
-                child: Image.asset(eImageAssets.appLogo),)
+                child: Text("ft",
+                    style: splash.controller!.isCompleted
+                        ? appCss.righteousSemiBold23.textColor(
+                        appColor(context)
+
+                            .darkText)
+                        : appCss.dmDenseExtraBold70.textColor(
+                        appColor(context)
+
+                            .whiteBg)))
             );
       }
     );

@@ -387,9 +387,10 @@ class SlotBookingProvider with ChangeNotifier {
               isData: true, isToken: true)
           .then((value) async {
         log("CALLA :${value.data}");
-        if (value.isSuccess!) {
+        if (value.isSuccess == true) {
           timeSlotModel = TimeSlotModel.fromJson(value.data);
 
+          log("timeSlotModel:$timeSlotModel");
           slotTime = value.data;
           String gap = timeSlotModel!.timeUnit == "hours"
               ? "${timeSlotModel!.gap}:00"
@@ -422,6 +423,7 @@ class SlotBookingProvider with ChangeNotifier {
     } catch (e) {
       hideLoading(context);
       notifyListeners();
+      log("EEEE fetchSlotTime: $e");
     }
   }
 
@@ -446,7 +448,7 @@ class SlotBookingProvider with ChangeNotifier {
           .getApi(api.isValidTimeSlot, data, isData: true, isToken: true)
           .then((value) async {
         if (value.isSuccess!) {
-          log("DDAA :${value.data}");
+          log("DDAA 1:${value.data}");
           if (value.data['isValidTimeSlot'] == true) {
             String day = DateFormat('EEEE').format(focusedDay.value);
 
@@ -492,6 +494,9 @@ class SlotBookingProvider with ChangeNotifier {
   checkSlotAvailableForAppChoose(
       {context, isEdit = false, isService = false}) async {
     try {
+
+      showLoading(context);
+      notifyListeners();
       focusedDay.value = DateTime.utc(
         focusedDay.value.year,
         focusedDay.value.month,
@@ -499,8 +504,6 @@ class SlotBookingProvider with ChangeNotifier {
         int.parse(appArray.hourList[scrollHourIndex]),
         int.parse(appArray.minList[scrollMinIndex]),
       );
-      showLoading(context);
-      notifyListeners();
       var data = {
         "provider_id": servicesCart!.userId,
         "dateTime":
@@ -514,7 +517,7 @@ class SlotBookingProvider with ChangeNotifier {
         hideLoading(context);
         notifyListeners();
         if (value.isSuccess!) {
-          log("DDAA :${value.data}");
+          log("DDAA 3:${value.data}");
           if (value.data['isValidTimeSlot'] == true) {
             dateTimeSelect(context, isService, isEdit: isEdit);
           } else {
@@ -811,14 +814,14 @@ primaryColor: appColor(context).primary,
     log("ARG: $data");
     servicesCart = data['selectServicesCart'];
     servicesCart!.selectedRequiredServiceMan =
-        servicesCart!.selectedRequiredServiceMan ?? "1";
+        servicesCart!.selectedRequiredServiceMan ??1;
     isPackage = data['isPackage'] ?? false;
     selectProviderIndex = data['selectProviderIndex'] ?? 0;
     notifyListeners();
     final locationCtrl = Provider.of<LocationProvider>(context, listen: false);
     if (locationCtrl.addressList.isNotEmpty) {
       int index = locationCtrl.addressList
-          .indexWhere((element) => element.isPrimary == "1");
+          .indexWhere((element) => element.isPrimary == 1);
       if (index >= 0) {
         address = locationCtrl.addressList[index];
       } else {
@@ -851,19 +854,19 @@ primaryColor: appColor(context).primary,
   }
 
   onRemoveService(context) {
-    if (int.parse(servicesCart!.selectedRequiredServiceMan!) == 1) {
+    if ((servicesCart!.selectedRequiredServiceMan!) == 1) {
       route.pop(context);
     } else {
       servicesCart!.selectedRequiredServiceMan =
-          (int.parse(servicesCart!.selectedRequiredServiceMan!) - 1).toString();
+          ((servicesCart!.selectedRequiredServiceMan!) - 1);
     }
     notifyListeners();
   }
 
   onAdd() {
-    int count = int.parse(servicesCart!.selectedRequiredServiceMan!);
+    int count = (servicesCart!.selectedRequiredServiceMan!);
     count++;
-    servicesCart!.selectedRequiredServiceMan = count.toString();
+    servicesCart!.selectedRequiredServiceMan = count;
 
     notifyListeners();
   }

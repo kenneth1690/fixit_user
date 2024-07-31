@@ -148,13 +148,11 @@ class ServicesDetailsProvider with ChangeNotifier {
   }
 
   onFeatured(context, Services? services, id) async {
-    final commonApi = Provider.of<CommonApiProvider>(context, listen: false);
-    ProviderModel provider = await commonApi.getProviderById(services!.userId);
     final providerDetail = Provider.of<ProviderDetailsProvider>(context, listen: false);
     providerDetail.selectProviderIndex = 0;
     providerDetail.notifyListeners();
-    onBook(context, services,
-        provider: provider,
+    onBook(context, services!,
+
         addTap: () => onAdd(id: id),
         minusTap: () => onRemoveService(context, id: id)).then((e) {
       service!.relatedServices![id].selectedRequiredServiceMan =
@@ -165,15 +163,15 @@ class ServicesDetailsProvider with ChangeNotifier {
 
   onRemoveService(context, {id}) async {
     if (id != null) {
-      if (int.parse(
+      if ((
               service!.relatedServices![id].selectedRequiredServiceMan!) ==
           1) {
         route.pop(context);
         isAlert = false;
         notifyListeners();
       } else {
-        if (int.parse(service!.relatedServices![id].requiredServicemen!) ==
-            int.parse(
+        if ((service!.relatedServices![id].requiredServicemen!) ==
+            (
                 service!.relatedServices![id].selectedRequiredServiceMan!)) {
           isAlert = true;
           notifyListeners();
@@ -183,21 +181,20 @@ class ServicesDetailsProvider with ChangeNotifier {
         } else {
           isAlert = false;
           notifyListeners();
-          service!.relatedServices![id].selectedRequiredServiceMan = (int.parse(
+          service!.relatedServices![id].selectedRequiredServiceMan = ((
                       service!
                           .relatedServices![id].selectedRequiredServiceMan!) -
-                  1)
-              .toString();
+                  1);
         }
       }
     } else {
-      if (int.parse(service!.selectedRequiredServiceMan!) == 1) {
+      if ((service!.selectedRequiredServiceMan!) == 1) {
         route.pop(context);
         isAlert = false;
         notifyListeners();
       } else {
-        if (int.parse(service!.requiredServicemen!) ==
-            int.parse(service!.selectedRequiredServiceMan!)) {
+        if ((service!.requiredServicemen!) ==
+            (service!.selectedRequiredServiceMan!)) {
           isAlert = true;
           notifyListeners();
           await Future.delayed(DurationClass.s3);
@@ -207,7 +204,7 @@ class ServicesDetailsProvider with ChangeNotifier {
           isAlert = false;
           notifyListeners();
           service!.selectedRequiredServiceMan =
-              (int.parse(service!.selectedRequiredServiceMan!) - 1).toString();
+              ((service!.selectedRequiredServiceMan!) - 1);
         }
       }
     }
@@ -219,14 +216,14 @@ class ServicesDetailsProvider with ChangeNotifier {
     notifyListeners();
     if (id != null) {
       int count =
-          int.parse(service!.relatedServices![id].selectedRequiredServiceMan!);
+          (service!.relatedServices![id].selectedRequiredServiceMan!);
       count++;
       service!.relatedServices![id].selectedRequiredServiceMan =
-          count.toString();
+          count;
     } else {
-      int count = int.parse(service!.selectedRequiredServiceMan!);
+      int count = (service!.selectedRequiredServiceMan!);
       count++;
-      service!.selectedRequiredServiceMan = count.toString();
+      service!.selectedRequiredServiceMan = count;
     }
     notifyListeners();
   }

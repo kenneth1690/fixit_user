@@ -11,7 +11,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 import 'dart:convert';
 
-
 class ProfileDetailProvider with ChangeNotifier {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
@@ -51,7 +50,7 @@ class ProfileDetailProvider with ChangeNotifier {
       builder: (context1) {
         return AlertDialog(
           insetPadding: const EdgeInsets.symmetric(horizontal: Insets.i20),
-          shape: const  SmoothRectangleBorder(
+          shape: const SmoothRectangleBorder(
               borderRadius: SmoothBorderRadius.all(SmoothRadius(
                   cornerRadius: AppRadius.r14, cornerSmoothing: 1))),
           content: Column(
@@ -78,7 +77,6 @@ class ProfileDetailProvider with ChangeNotifier {
                           getImage(context, ImageSource.camera);
                         }
                       }))
-
             ],
           ),
         );
@@ -93,9 +91,9 @@ class ProfileDetailProvider with ChangeNotifier {
     showLoading(context);
     notifyListeners();
     dynamic mimeTypeData;
-    if(imageFile!= null) {
-      mimeTypeData  =
-      lookupMimeType(imageFile!.path, headerBytes: [0xFF, 0xD8])!.split('/');
+    if (imageFile != null) {
+      mimeTypeData = lookupMimeType(imageFile!.path, headerBytes: [0xFF, 0xD8])!
+          .split('/');
     }
 
     var body = {
@@ -104,11 +102,11 @@ class ProfileDetailProvider with ChangeNotifier {
       "code": dialCode,
       "phone": txtPhone.text,
       "_method": "PUT",
-      if(imageFile != null)
-      'profile_image': await dio.MultipartFile.fromFile(
-          imageFile!.path.toString(),
-          filename: imageFile!.name.toString(),
-          contentType: MediaType(mimeTypeData[0], mimeTypeData[1])),
+      if (imageFile != null)
+        'profile_image': await dio.MultipartFile.fromFile(
+            imageFile!.path.toString(),
+            filename: imageFile!.name.toString(),
+            contentType: MediaType(mimeTypeData[0], mimeTypeData[1])),
     };
 
     dio.FormData formData = dio.FormData.fromMap(body);
@@ -124,7 +122,7 @@ class ProfileDetailProvider with ChangeNotifier {
           route.pop(context);
 
           final commonApi =
-          Provider.of<CommonApiProvider>(context, listen: false);
+              Provider.of<CommonApiProvider>(context, listen: false);
           await commonApi.selfApi(context);
         } else {
           log("value.message :${value.message}");
@@ -141,34 +139,35 @@ class ProfileDetailProvider with ChangeNotifier {
 
   onInitData(context) async {
     preferences = await SharedPreferences.getInstance();
-    bool isGuest  = preferences!.getBool(session.isContinueAsGuest) ?? false;
+    bool isGuest = preferences!.getBool(session.isContinueAsGuest) ?? false;
 
     //Map user = json.decode(preferences!.getString(session.user)!);
-    if(!isGuest){
-showLoading(context);
-notifyListeners();
-      userModel =
-          UserModel.fromJson(
-              json.decode(preferences!.getString(session.user)!));
+    if (!isGuest) {
+      showLoading(context);
+      notifyListeners();
+      userModel = UserModel.fromJson(
+          json.decode(preferences!.getString(session.user)!));
       log("userModel :${userModel}");
       txtName.text = userModel!.name ?? "";
       txtEmail.text = userModel!.email ?? "";
       txtPhone.text = userModel!.phone ?? "";
       //dialCode = userModel!.code ?? "+91";
-      if(userModel!.code != null){
-        int index = countriesEnglish.indexWhere((element) => element['dial_code'] == "+${userModel!.code!}");
+      if (userModel!.code != null) {
+        int index = countriesEnglish.indexWhere((element) =>
+            element['dial_code'] ==
+            "${userModel!.code!.contains("+") ? "" : "+s"}${userModel!.code!}");
         log("index :$index");
-        if(index >=0){
+        if (index >= 0) {
           dialCode = countriesEnglish[index]['dial_code'];
           notifyListeners();
         }
         log("dialCode :$dialCode");
+      } else {
+        dialCode = "+91";
       }
       await Future.delayed(Durations.short3);
-hideLoading(context);
-notifyListeners();
-
-
+      hideLoading(context);
+      notifyListeners();
     }
 
     notifyListeners();

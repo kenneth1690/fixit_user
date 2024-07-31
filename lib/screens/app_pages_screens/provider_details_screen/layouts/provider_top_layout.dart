@@ -81,15 +81,15 @@ class ProviderTopLayout extends StatelessWidget {
                 Text(providerCtrl.provider!.description ??"",
                     style: appCss.dmDenseMedium14
                         .textColor(appColor(context).darkText)),
-                // Text(language(context, appFonts.personalInfo),
-                //         style: appCss.dmDenseMedium12
-                //             .textColor(appColor(context).lightText))
-                //     .paddingOnly(top: Insets.i15, bottom: Insets.i8),
+                Text(language(context, appFonts.personalInfo),
+                        style: appCss.dmDenseMedium12
+                            .textColor(appColor(context).lightText))
+                    .paddingOnly(top: Insets.i15, bottom: Insets.i8),
                 if(providerCtrl.provider!.phone != null || providerCtrl.provider!.email != null)
                 PersonalDetailLayout(
                   email: providerCtrl.provider!.email ??"",
                   code: providerCtrl.provider!.code,
-                  phone:providerCtrl.provider!.phone,
+                  phone:providerCtrl.provider!.phone != null ? providerCtrl.provider.toString():"",
                   knownLanguage: providerCtrl.provider!.knownLanguages,
                 )
               ]).paddingAll(Insets.i20));

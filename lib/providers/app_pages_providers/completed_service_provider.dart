@@ -108,7 +108,9 @@ class CompletedServiceProvider with ChangeNotifier {
           isDownloading = false;
           progress = "";
           notifyListeners();
-          snackBarMessengers(context,message: language(context, appFonts.invoiceDownload),color: appColor(context).primary);
+          snackBarMessengers(context,
+              message: language(context, appFonts.invoiceDownload),
+              color: appColor(context).primary);
         }
       } catch (e) {
         debugPrint(e.toString());
@@ -137,7 +139,7 @@ class CompletedServiceProvider with ChangeNotifier {
           .then((value) async {
         hideLoading(context);
         notifyListeners();
-        log("booking/payment :${value.data} //${value.message}");
+        log("booking/payment :${value.data} //${value.message} // ${value.isSuccess}");
         if (value.isSuccess!) {
           if (isCash) {
             updateStatus(context, appFonts.completed);
@@ -224,14 +226,13 @@ class CompletedServiceProvider with ChangeNotifier {
           subtext: language(context, appFonts.areYouSureComplete),
           bText1: language(context, appFonts.viewBillDetails),
           b1OnTap: () {
-            route.pushNamed(context, routeName.completedServiceScreen,
-                arg: {"booking": booking}).then(() {
-              route.pushNamedAndRemoveUntil(context, routeName.dashboard);
-              final dash =
-                  Provider.of<DashboardProvider>(context, listen: false);
-              dash.selectIndex = 1;
-              dash.notifyListeners();
-            });
+            route.pop(context);
+            notifyListeners();
+            /* route.pushNamedAndRemoveUntil(context, routeName.dashboard);
+            final dash =
+            Provider.of<DashboardProvider>(context, listen: false);
+            dash.selectIndex = 1;
+            dash.notifyListeners();*/
           },
         );
       },
@@ -261,7 +262,6 @@ class CompletedServiceProvider with ChangeNotifier {
               "pending") {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(language(context, appFonts.yourPaymentIsDeclined)),
-
               backgroundColor: appColor(context).red,
             ));
           } else {

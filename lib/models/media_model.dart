@@ -38,7 +38,7 @@ class Media {
   Media.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     modelType = json['model_type'];
-    modelId = json['model_id'];
+    modelId = json['model_id']?.toString();
     uuid = json['uuid'];
     collectionName = json['collection_name'];
     name = json['name'];
@@ -46,8 +46,8 @@ class Media {
     mimeType = json['mime_type'];
     disk = json['disk'];
     conversionsDisk = json['conversions_disk'];
-    size = json['size'];
-    orderColumn = json['order_column'];
+    size = json['size']?.toString();
+    orderColumn = json['order_column']?.toString();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     originalUrl = json['original_url'];

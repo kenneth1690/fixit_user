@@ -60,6 +60,7 @@ class ServicemanListLayout extends StatelessWidget {
                     Text(language(context, data!.name!),
                         style: appCss.dmDenseMedium14
                             .textColor(appColor(context).darkText)),
+                    if(data!.reviewRatings != null)
                     VerticalDivider(
                             width: 1,
                             thickness: 1,
@@ -67,6 +68,7 @@ class ServicemanListLayout extends StatelessWidget {
                             indent: 6,
                             endIndent: 6)
                         .paddingSymmetric(horizontal: Insets.i6),
+                    if(data!.reviewRatings != null)
                     Row(children: [
                       SvgPicture.asset(eSvgAssets.star),
                       const HSpace(Sizes.s4),

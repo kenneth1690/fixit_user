@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixit_user/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileProvider with ChangeNotifier {
   AnimationController? controller;
@@ -20,10 +21,17 @@ class ProfileProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  onAnimate() {
-    profileLists =
-        appArray.profileList.map((e) => ProfileModel.fromJson(e)).toList();
-    getUserDetail();
+  onAnimate() async{
+    preferences = await SharedPreferences.getInstance();
+    isGuest  = preferences!.getBool(session.isContinueAsGuest) ?? false;
+    if(isGuest){
+      profileLists =
+          appArray.guestProfileList.map((e) => ProfileModel.fromJson(e)).toList();
+    }else {
+      profileLists =
+          appArray.profileList.map((e) => ProfileModel.fromJson(e)).toList();
+      getUserDetail();
+    }
 
   }
 
@@ -103,6 +111,9 @@ class ProfileProvider with ChangeNotifier {
     } else if (data.title == appFonts.logOut) {
       logoutConfirmation(context);
 
+
+    } else if (data.title == appFonts.shareApp) {
+      Share.share('Download the Fixit User App for get better services at home.\n\nhttps://play.google.com/store/apps/details?id=com.webiots.fixituserapi');
 
     } else if (data.title == appFonts.deleteAccount) {
       animateDesign(sync);

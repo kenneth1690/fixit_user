@@ -4,17 +4,17 @@ import '../config.dart';
 class Services {
   int? id;
   String? title;
-  String? price;
-  String? status;
+  double? price;
+  int? status;
   String? duration;
   String? durationUnit;
-  String? serviceRate;
-  String? discount;
+  double? serviceRate;
+  int? discount;
   String? description;
-  String? userId;
+  int? userId;
   String? type;
-  String? isFeatured;
-  String? requiredServicemen;
+  int? isFeatured;
+  int? requiredServicemen;
   String? isMultipleServiceman;
   String? metaDescription;
   String? selectServiceManType;
@@ -27,7 +27,7 @@ class Services {
   ProviderModel? user;
   List<Reviews>? reviews;
   List<ProviderModel>? selectedServiceMan;
-  String? selectedRequiredServiceMan;
+  int? selectedRequiredServiceMan;
   String? selectDateTimeOption;
   String? selectedDateTimeFormat;
   String? selectedServiceNote;
@@ -62,11 +62,11 @@ class Services {
   Services.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    price = json['price'];
+    price = json['price'] != null ? double.parse(json['price'].toString()):null;
     status = json['status'];
     duration = json['duration'];
     durationUnit = json['duration_unit'];
-    serviceRate = json['service_rate'];
+    serviceRate = json['service_rate'] != null ? double.parse(json['service_rate'].toString()):null;
     discount = json['discount'];
     description = json['description'];
     userId = json['user_id'];

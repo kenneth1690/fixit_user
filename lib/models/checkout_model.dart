@@ -39,7 +39,7 @@ class CheckoutModel {
 }
 
 class SingleServices {
-  String? providerId;
+  int? providerId;
   int? serviceId;
   double? servicePrice;
   int? addressId;
@@ -163,7 +163,7 @@ class PackageServices {
 }
 
 class Total {
-  String? requiredServicemen;
+  int? requiredServicemen;
   int? totalExtraServicemen;
   int? totalServicemen;
   double? totalServicemanCharge;

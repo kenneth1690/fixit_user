@@ -115,7 +115,6 @@ class FirebaseApi {
           "chatId": newChatId,
           "isSeen": false,
           "senderName": userModel!.name,
-
           "receiverToken": rToken,
           "senderToken": sToken,
           "bookingId": bookingId,

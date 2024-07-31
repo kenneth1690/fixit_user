@@ -4,12 +4,12 @@ class CurrencyModel {
   int? id;
   String? code;
   String? symbol;
-  String? noOfDecimal;
-  String? exchangeRate;
+  int? noOfDecimal;
+  double? exchangeRate;
   String? thousandsSeparator;
   String? decimalSeparator;
-  String? systemReserve;
-  String? status;
+
+  int? status;
   String? createdById;
   String? createdAt;
   String? updatedAt;
@@ -24,7 +24,7 @@ class CurrencyModel {
         this.exchangeRate,
         this.thousandsSeparator,
         this.decimalSeparator,
-        this.systemReserve,
+
         this.status,
         this.createdById,
         this.createdAt,
@@ -36,10 +36,9 @@ class CurrencyModel {
     code = json['code'];
     symbol = json['symbol'];
     noOfDecimal = json['no_of_decimal'];
-    exchangeRate = json['exchange_rate'];
+    exchangeRate = json['exchange_rate'] != null ?double.parse(json['exchange_rate'].toString()) :null;
     thousandsSeparator = json['thousands_separator'];
     decimalSeparator = json['decimal_separator'];
-    systemReserve = json['system_reserve'];
     status = json['status'];
     createdById = json['created_by_id'];
     createdAt = json['created_at'];
@@ -62,7 +61,7 @@ class CurrencyModel {
     data['exchange_rate'] = exchangeRate;
     data['thousands_separator'] = thousandsSeparator;
     data['decimal_separator'] = decimalSeparator;
-    data['system_reserve'] = systemReserve;
+
     data['status'] = status;
     data['created_by_id'] = createdById;
     data['created_at'] = createdAt;

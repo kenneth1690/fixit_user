@@ -45,7 +45,7 @@ class SelectServicemanProvider with ChangeNotifier {
               style: appCss.dmDenseSemiBold18
                   .textColor(appColor(context).primary),
               providerModel: providerModel,
-              requiredServiceMan: int.parse(
+              requiredServiceMan: (
                   servicePackageList[index].selectedRequiredServiceMan ?? "1"),
               addTap: addTap,
               minusTap: minusTap,
@@ -71,7 +71,7 @@ class SelectServicemanProvider with ChangeNotifier {
 
   onTapBook(context,
       {Services? service,
-      ProviderModel? providerModel,
+      //ProviderModel? providerModel,
       index,
       selectProviderIndex,
       isPackage = false}) async {
@@ -164,13 +164,13 @@ class SelectServicemanProvider with ChangeNotifier {
   }
 
   onRemoveService(context, index)async {
-    if (int.parse(servicePackageList[index].selectedRequiredServiceMan!) == 1) {
+    if ((servicePackageList[index].selectedRequiredServiceMan!) == 1) {
       route.pop(context);
       isAlert = false;
       notifyListeners();
     } else {
-      if (int.parse(servicePackageList[index].requiredServicemen!) ==
-          int.parse(servicePackageList[index].selectedRequiredServiceMan!)) {
+      if ((servicePackageList[index].requiredServicemen!) ==
+          (servicePackageList[index].selectedRequiredServiceMan!)) {
         isAlert = true;
         notifyListeners();
         await Future.delayed(DurationClass.s3);
@@ -181,7 +181,7 @@ class SelectServicemanProvider with ChangeNotifier {
         isAlert = false;
         notifyListeners();
         servicePackageList[index].selectedRequiredServiceMan =
-            (int.parse(servicePackageList[index].selectedRequiredServiceMan!) - 1).toString();
+            ((servicePackageList[index].selectedRequiredServiceMan!) - 1);
       }
 
 
@@ -193,9 +193,9 @@ class SelectServicemanProvider with ChangeNotifier {
     isAlert = false;
     notifyListeners();
     int count =
-        int.parse(servicePackageList[index].selectedRequiredServiceMan!);
+        (servicePackageList[index].selectedRequiredServiceMan!);
     count++;
-    servicePackageList[index].selectedRequiredServiceMan = count.toString();
+    servicePackageList[index].selectedRequiredServiceMan = count;
 
     notifyListeners();
   }

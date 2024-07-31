@@ -21,9 +21,7 @@ class MyReviewProvider extends ChangeNotifier {
         notifyListeners();
         if (value.isSuccess!) {
           List list = value.data;
-          if(list.isNotEmpty){
-            reviews = [];
-          }
+          reviews = [];
           for (var data in value.data) {
 
             if(!reviews.contains(Reviews.fromJson(data))) {
@@ -205,7 +203,7 @@ log("reviews :${reviews.length}");
     } catch (e) {
       hideLoading(context);
       notifyListeners();
-      log("CATCH : $e");
+      log("CATCH deleteReview: $e");
     }
   }
 

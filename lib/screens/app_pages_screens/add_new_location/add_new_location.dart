@@ -49,7 +49,7 @@ class _AddNewLocationState extends State<AddNewLocation> with TickerProviderStat
                             RegisterWidgetClass().phoneTextBox(
                                 context,
                                 hPadding: 00,
-                                dialCode:"+91",
+                                dialCode:value.dialCode,
                                 value.numberCtrl,
                                 value.numberFocus,
                                 onChanged: (CountryCodeCustom? code) =>

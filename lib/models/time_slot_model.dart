@@ -22,10 +22,10 @@ class TimeSlotModel {
         timeSlots!.add(TimeSlots.fromJson(v));
       });
     }
-    gap = json['gap'];
+    gap = json['gap']?.toString();
     timeUnit = json['time_unit'];
-    providerId = json['provider_id'];
-    servicemanId = json['serviceman_id'];
+    providerId = json['provider_id']?.toString();
+    servicemanId = json['serviceman_id']?.toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -53,7 +53,7 @@ class TimeSlots {
 
   TimeSlots.fromJson(Map<String, dynamic> json) {
     day = json['day'];
-    status = json['status'];
+    status = json['status']?.toString();
     endTime = json['end_time'];
     startTime = json['start_time'];
   }

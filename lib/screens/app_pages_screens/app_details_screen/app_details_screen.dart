@@ -22,13 +22,13 @@ class AppDetailsScreen extends StatelessWidget {
                     .padding(vertical: Insets.i8)),
             body: Column(children: [
               Column(
-                  children: appArray.appDetailsList
+                  children: value.pageList
                       .asMap()
                       .entries
                       .map((e) =>
                       AppDetailsLayout(
                           data: e.value,
-                          list: appArray.appDetailsList,
+                          list: value.pageList,
                           index: e.key,
                           onTap: () => value.onTapOption(e.value, context)
                       ))

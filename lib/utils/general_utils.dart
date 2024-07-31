@@ -6,6 +6,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fixit_user/config.dart';
 import 'package:intl/intl.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 
 Color colorCondition(String? text, context) {
   if (text == appFonts.pending) {
@@ -262,13 +263,13 @@ getTotalRequiredServiceMan(List<CartModel> cart, id, isPackage) {
   for (var list in cart) {
     if (list.isPackage == false) {
       if (list.serviceList!.id == id) {
-        count = int.parse(list.serviceList!.selectedRequiredServiceMan!);
+        count = (list.serviceList!.selectedRequiredServiceMan!);
         return count;
       }
     } else {
       for (var pack in list.servicePackageList!.services!) {
         if (pack.id == id) {
-          count = int.parse(pack.selectedRequiredServiceMan!);
+          count = (pack.selectedRequiredServiceMan!);
           return count;
         }
       }
@@ -362,7 +363,7 @@ bool isPaymentComplete(BookingModel value) {
 double totalServicesCharges(BookingModel bookingModel){
   double price = 0.0;
   for(var d in bookingModel.extraCharges!){
-    price = price +double.parse(d.total!);
+    price = price + d.total!;
   }
   return price;
 }
@@ -370,7 +371,7 @@ double totalServicesCharges(BookingModel bookingModel){
 double totalServicesChargesAndTotalBooking(BookingModel bookingModel){
   double price = 0.0;
   for(var d in bookingModel.extraCharges!){
-    price = price +double.parse(d.total!);
+    price = price + d.total!;
   }
 
   if(bookingModel.paymentMethod!.toLowerCase() == "cash" ){
@@ -410,3 +411,27 @@ bool  isEmptyOrNull(val) =>
     val == null ||
         (val != null && val!.isEmpty) ||
         (val != null && val! == 'null');
+
+//get address data
+String getAddress(context,addressId){
+  String address ="";
+  final loc = Provider.of<LocationProvider>(context,listen: false);
+
+  int index = loc.addressList.indexWhere((element) => element.id.toString() == addressId.toString());
+  print("loc.addressList :${index}");
+  if(index >=0){
+    address = "${loc.addressList[index].address}-${loc.addressList[index].area ?? loc.addressList[index].state!.name}";
+  }
+  return address;
+}
+
+RateMyApp rateMyApp = RateMyApp(
+  preferencesPrefix: 'rateMyApp_',
+  minDays: 1,
+  minLaunches: 10,
+  remindDays: 7,
+  remindLaunches: 10,
+  googlePlayIdentifier: 'com.webiots.fixituserapi',
+
+);
+

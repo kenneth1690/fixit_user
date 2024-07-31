@@ -87,7 +87,7 @@ class CountryStateModel {
 class StateModel {
   int? id;
   String? name;
-  String? countryId;
+  int? countryId;
   String? createdAt;
   String? updatedAt;
 

@@ -20,7 +20,7 @@ class ProviderDetailsScreen extends StatelessWidget {
           },
           child: StatefulWrapper(
             onInit: () => Future.delayed(DurationClass.ms50)
-                .then((s) => value.onReady(context, id: id)),
+                .then((s) => value.onReady(context)),
             child: RefreshIndicator(
               onRefresh: () {
                 return value.onRefresh(context);
@@ -72,59 +72,64 @@ class ProviderDetailsScreen extends StatelessWidget {
                                 ]),
                             body: Consumer<CartProvider>(
                                 builder: (context2, cart, child) {
-                              return ListView(children: [
-                                const ProviderTopLayout(),
-                                if (value.categoryList.isNotEmpty)
-                                  Text(
-                                          language(
-                                              context, appFonts.provideServiceIn),
-                                          style: appCss.dmDenseSemiBold16
-                                              .textColor(
-                                                  appColor(context).darkText))
-                                      .paddingOnly(top: Insets.i25),
-                                SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                            children: value.categoryList
-                                                .asMap()
-                                                .entries
-                                                .map((e) => TopCategoriesLayout(
-                                                    index: e.key,
-                                                    data: e.value,
-                                                    selectedIndex:
-                                                        value.selectIndex,
-                                                    rPadding: Insets.i20,
-                                                    onTap: () =>
-                                                        value.onSelectService(
-                                                            context, e.key)).marginOnly(right: rtl(context)? 0:Sizes.s10,left: rtl(context)?Sizes.s10:0 ))
-                                                .toList())
-                                        .padding(vertical: Insets.i15)),
-                                ...value.serviceList.asMap().entries.map((e) =>
-                                    FeaturedServicesLayout(
-                                        data: e.value,
-                                        isProvider: true,
-                                        inCart: isInCart(context, e.value.id),
-                                        addTap: ()
-                                        {
-                                          final providerDetail = Provider.of<ProviderDetailsProvider>(context, listen: false);
-                                          providerDetail.selectProviderIndex = 0;
-                                          providerDetail.notifyListeners();
-                                              onBook(context, e.value,
-                                                      provider: e.value.user,
-                                                      addTap: () =>
-                                                          value.onAdd(e.key),
-                                                      minusTap: () =>
-                                                          value.onRemoveService(
-                                                              context, e.key))
-                                                  .then((e) {
-                                                value.serviceList[e.key]
-                                                        .selectedRequiredServiceMan =
-                                                    value.serviceList[e.key]
-                                                        .requiredServicemen;
-                                                value.notifyListeners();
-                                              });
-                                            }))
-                              ]).paddingAll(Insets.i20);
+                              return SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                  const ProviderTopLayout(),
+                                  if (value.categoryList.isNotEmpty)
+                                    Text(
+                                            language(
+                                                context, appFonts.provideServiceIn),
+                                            style: appCss.dmDenseSemiBold16
+                                                .textColor(
+                                                    appColor(context).darkText))
+                                        .paddingOnly(top: Insets.i25),
+                                  SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                              children: value.categoryList
+                                                  .asMap()
+                                                  .entries
+                                                  .map((e) => TopCategoriesLayout(
+                                                      index: e.key,
+                                                      data: e.value,
+                                                      isExapnded: false,
+                                                      selectedIndex:
+                                                          value.selectIndex,
+                                                      rPadding: Insets.i20,
+                                                      onTap: () =>
+                                                          value.onSelectService(
+                                                              context, e.key)).marginOnly(right: rtl(context)? 0:Sizes.s10,left: rtl(context)?Sizes.s10:0 ))
+                                                  .toList())
+                                          .padding(vertical: Insets.i15)),
+                                  ...value.serviceList.asMap().entries.map((e) =>
+                                      FeaturedServicesLayout(
+                                          data: e.value,
+                                          isProvider: true,
+                                          inCart: isInCart(context, e.value.id),
+                                          addTap: ()
+                                          {
+                                            final providerDetail = Provider.of<ProviderDetailsProvider>(context, listen: false);
+                                            providerDetail.selectProviderIndex = 0;
+                                            providerDetail.notifyListeners();
+                                                onBook(context, e.value,
+                                                        provider: e.value.user,
+                                                        addTap: () =>
+                                                            value.onAdd(e.key),
+                                                        minusTap: () =>
+                                                            value.onRemoveService(
+                                                                context, e.key))
+                                                    .then((e) {
+                                                  value.serviceList[e.key]
+                                                          .selectedRequiredServiceMan =
+                                                      value.serviceList[e.key]
+                                                          .requiredServicemen;
+                                                  value.notifyListeners();
+                                                });
+                                              }))
+                                ]).paddingAll(Insets.i20),
+                              );
                             })),
                       ),
               ),

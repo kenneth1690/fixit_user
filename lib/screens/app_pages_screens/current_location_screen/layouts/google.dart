@@ -15,7 +15,7 @@ class _SearchLocationState extends State<SearchLocation> {
   List placePredictions = [];
   FocusNode focusNode = FocusNode();
   TextEditingController search = TextEditingController();
-  String apiKey = "AIzaSyB_QVVCZk-3l_nUDrwmg8hyOx3c6feV8QQ";
+  String apiKey = "AIzaSyDNuJFHTBoAJeSsDdJhyuQrpkDo5_bl6As";
 
   placeAutoComplete(query) async {
     String api = "https://maps.googleapis.com/maps/api/place/autocomplete/json";

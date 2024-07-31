@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:fixit_user/widgets/common_photo_view.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../config.dart';
@@ -86,13 +87,12 @@ class ChatLayout extends StatelessWidget {
                   ],
                     shape:  SmoothRectangleBorder(
                         borderRadius:SmoothBorderRadius(cornerRadius: 10,cornerSmoothing: 1)),
-                  ),
-                  child: Container()),
+                  )),
               imageUrl: document!.content!,
               width: Sizes.s160,
 
               fit: BoxFit.fill,
-            ),
+            ).inkWell(onTap: ()=> route.push(context, CommonPhotoView(image: document!.content,))),
           ).padding(horizontal:Insets.i20,top: Insets.i10,vertical: Insets.i10)
       ],
     );

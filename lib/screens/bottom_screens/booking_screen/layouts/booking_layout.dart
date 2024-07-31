@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'package:intl/intl.dart';
-
 import '../../../../config.dart';
 
 class BookingLayout extends StatefulWidget {
@@ -22,9 +22,9 @@ class BookingLayout extends StatefulWidget {
 class _BookingLayoutState extends State<BookingLayout> {
   @override
   Widget build(BuildContext context) {
-
     return Consumer<BookingProvider>(builder: (context1, value, child) {
-      return Stack(alignment: Alignment.bottomCenter,
+      return Stack(
+        alignment: Alignment.bottomCenter,
         children: [
           Column(children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -54,12 +54,13 @@ class _BookingLayoutState extends State<BookingLayout> {
                       if (widget.data!.service!.discount != null)
                         Text(
                             language(context,
-                                "(${double.parse(widget.data!.service!.discount!).round()}% ${language(context, appFonts.off)})"),
+                                "(${widget.data!.service!.discount!}% ${language(context, appFonts.off)})"),
                             style: appCss.dmDenseMedium14
                                 .textColor(appColor(context).red))
                     ])
                   ])),
-              widget.data!.service!.media != null && widget.data!.service!.media!.isNotEmpty
+              widget.data!.service!.media != null &&
+                      widget.data!.service!.media!.isNotEmpty
                   ? CachedNetworkImage(
                       imageUrl: widget.data!.service!.media![0].originalUrl!,
                       imageBuilder: (context, imageProvider) => Container(
@@ -69,9 +70,10 @@ class _BookingLayoutState extends State<BookingLayout> {
                               image: DecorationImage(
                                   image: imageProvider, fit: BoxFit.cover),
                               shape: const SmoothRectangleBorder(
-                                  borderRadius: SmoothBorderRadius.all(SmoothRadius(
-                                      cornerRadius: AppRadius.r10,
-                                      cornerSmoothing: 1))))),
+                                  borderRadius: SmoothBorderRadius.all(
+                                      SmoothRadius(
+                                          cornerRadius: AppRadius.r10,
+                                          cornerSmoothing: 1))))),
                       placeholder: (context, url) => Container(
                           height: Sizes.s84,
                           width: Sizes.s84,
@@ -80,13 +82,9 @@ class _BookingLayoutState extends State<BookingLayout> {
                                   image: AssetImage(eImageAssets.noImageFound1),
                                   fit: BoxFit.cover),
                               shape: const SmoothRectangleBorder(
-                                  borderRadius: SmoothBorderRadius.all(SmoothRadius(
-                                      cornerRadius: AppRadius.r10,
-                                      cornerSmoothing: 1))))),
-                      errorWidget: (context, url, error) => Container(
-                          height: Sizes.s84,
-                          width: Sizes.s84,
-                          decoration: ShapeDecoration(image: DecorationImage(image: AssetImage(eImageAssets.noImageFound1), fit: BoxFit.cover), shape: const SmoothRectangleBorder(borderRadius: SmoothBorderRadius.all(SmoothRadius(cornerRadius: AppRadius.r10, cornerSmoothing: 1))))))
+                                  borderRadius: SmoothBorderRadius.all(
+                                      SmoothRadius(cornerRadius: AppRadius.r10, cornerSmoothing: 1))))),
+                      errorWidget: (context, url, error) => Container(height: Sizes.s84, width: Sizes.s84, decoration: ShapeDecoration(image: DecorationImage(image: AssetImage(eImageAssets.noImageFound1), fit: BoxFit.cover), shape: const SmoothRectangleBorder(borderRadius: SmoothBorderRadius.all(SmoothRadius(cornerRadius: AppRadius.r10, cornerSmoothing: 1))))))
                   : Container(height: Sizes.s84, width: Sizes.s84, decoration: ShapeDecoration(image: DecorationImage(image: AssetImage(eImageAssets.noImageFound1), fit: BoxFit.cover), shape: const SmoothRectangleBorder(borderRadius: SmoothBorderRadius.all(SmoothRadius(cornerRadius: AppRadius.r10, cornerSmoothing: 1)))))
             ]),
             Image.asset(eImageAssets.bulletDotted)
@@ -96,16 +94,15 @@ class _BookingLayoutState extends State<BookingLayout> {
               statusText: widget.data!.bookingStatus!.name,
               statusId: widget.data!.bookingStatusId,
             ),
-            if (widget.data!.bookingStatus!.slug !=
-                appFonts.cancelled)
+            if (widget.data!.bookingStatus!.slug != appFonts.cancelled)
               StatusRow(
                   statusText: widget.data!.bookingStatus!.name,
                   statusId: widget.data!.bookingStatusId,
                   title: appFonts.selectServicemen,
                   title2:
-                      "${(int.parse(widget.data!.requiredServicemen! )+ (widget.data!.totalExtraServicemen != null ? int.parse(widget.data!.totalExtraServicemen!): 0))} ${capitalizeFirstLetter(language(context, appFonts.serviceman))}",
-                  style:
-                      appCss.dmDenseMedium12.textColor(appColor(context).darkText)),
+                      "${((widget.data!.requiredServicemen != null ? widget.data!.requiredServicemen! :0) + (widget.data!.totalExtraServicemen != null ? (widget.data!.totalExtraServicemen != null ? widget.data!.requiredServicemen! :0) : 0))} ${capitalizeFirstLetter(language(context, appFonts.serviceman))}",
+                  style: appCss.dmDenseMedium12
+                      .textColor(appColor(context).darkText)),
             StatusRow(
                 statusText: widget.data!.bookingStatus!.name,
                 statusId: widget.data!.bookingStatusId,
@@ -113,12 +110,12 @@ class _BookingLayoutState extends State<BookingLayout> {
                 onTap: widget.editDateTimeTap!,
                 title2: DateFormat("dd-MM-yyyy, hh:mm aa")
                     .format(DateTime.parse(widget.data!.dateTime!)),
-                isDateLocation: widget.data!.bookingStatus!.slug ==
-                        appFonts.pending
-                    ? true
-                    : false,
-                style:
-                    appCss.dmDenseMedium12.textColor(appColor(context).darkText)),
+                isDateLocation:
+                    widget.data!.bookingStatus!.slug == appFonts.pending
+                        ? true
+                        : false,
+                style: appCss.dmDenseMedium12
+                    .textColor(appColor(context).darkText)),
             StatusRow(
                 statusText: widget.data!.bookingStatus!.name,
                 statusId: widget.data!.bookingStatusId,
@@ -126,37 +123,44 @@ class _BookingLayoutState extends State<BookingLayout> {
                 onTap: widget.editLocationTap,
                 title2: widget.data!.consumer != null
                     ? widget.data!.address == null
-                        ? "${widget.data!.address!.address}-${widget.data!.address!.area ?? widget.data!.address!.state!.name}"
+                        ? getAddress(context, widget.data!.addressId)
                         : "${widget.data!.address!.address}-${widget.data!.address!.area ?? widget.data!.address!.state!.name}"
                     : "",
-                isDateLocation: (widget.data!.bookingStatus!.slug ==
-                        appFonts.pending &&
-                    widget.data!.bookingStatus!.slug !=
-                        appFonts.cancelled),
-                style:
-                    appCss.dmDenseMedium12.textColor(appColor(context).darkText)),
-            if (widget.data!.bookingStatus!.slug !=
-                appFonts.cancelled)
+                isDateLocation:
+                    (widget.data!.bookingStatus!.slug == appFonts.pending &&
+                        widget.data!.bookingStatus!.slug != appFonts.cancelled),
+                style: appCss.dmDenseMedium12
+                    .textColor(appColor(context).darkText)),
+            if (widget.data!.bookingStatus!.slug != appFonts.cancelled)
               StatusRow(
                   statusText: widget.data!.bookingStatus!.name,
                   statusId: widget.data!.bookingStatusId,
                   title: appFonts.payment,
-                  title2: widget.data!.paymentStatus != null ?widget.data!.paymentMethod == "cash"? widget.data!.paymentStatus!.toLowerCase() == "completed" ? widget.data!.paymentStatus!: language(context, appFonts.notPaid).toUpperCase() : widget.data!.paymentStatus!:  widget.data!.bookingStatus!.slug == appFonts.completed
-                      ? widget.data!.paymentStatus == "COMPLETED"
-                      ? language(context, appFonts.paid)
-                      : language(context, appFonts.notPaid)
-                      : widget.data!.paymentMethod == "cash"
-                      ? language(context, appFonts.notPaid)
-                      : language(context, appFonts.paid),
-                  style:
-                      appCss.dmDenseMedium12.textColor(appColor(context).online)),
+                  title2: widget.data!.paymentStatus != null
+                      ? widget.data!.paymentMethod == "cash"
+                          ? widget.data!.paymentStatus!.toLowerCase() ==
+                                  "completed"
+                              ? widget.data!.paymentStatus!
+                              : language(context, appFonts.notPaid)
+                                  .toUpperCase()
+                          : widget.data!.paymentStatus!
+                      : widget.data!.bookingStatus!.slug == appFonts.completed
+                          ? widget.data!.paymentStatus == "COMPLETED"
+                              ? language(context, appFonts.paid)
+                              : language(context, appFonts.notPaid)
+                          : widget.data!.paymentMethod == "cash"
+                              ? language(context, appFonts.notPaid)
+                              : language(context, appFonts.paid),
+                  style: appCss.dmDenseMedium12
+                      .textColor(appColor(context).online)),
             StatusRow(
                 title: appFonts.paymentMode,
                 title2: widget.data!.paymentMethod == "on_hand" ||
                         widget.data!.paymentMethod == "cash"
                     ? language(context, appFonts.cash)
                     : capitalizeFirstLetter(widget.data!.paymentMethod),
-                style: appCss.dmDenseMedium12.textColor(appColor(context).online)),
+                style:
+                    appCss.dmDenseMedium12.textColor(appColor(context).online)),
             const VSpace(Sizes.s15),
             if (widget.data!.isExpand!)
               Column(
@@ -170,9 +174,11 @@ class _BookingLayoutState extends State<BookingLayout> {
                                 ? widget.data!.provider!.media![0].originalUrl!
                                 : null,
                             name: widget.data!.provider!.name,
-                            rate: widget.data!.provider!.reviewRatings != null
-                                ? widget.data!.provider!.reviewRatings.toString()
-                                : "0",
+                            rate:
+                                widget.data!.provider!.reviewRatings != null
+                                    ? widget.data!.provider!.reviewRatings
+                                        .toString()
+                                    : "0",
                             index: 0,
                             list: const [])
                         .paddingSymmetric(horizontal: Insets.i12)
@@ -187,8 +193,10 @@ class _BookingLayoutState extends State<BookingLayout> {
                     Column(children: [
                       if (widget.data!.servicemen!.isNotEmpty)
                         Column(
-                            children:
-                                widget.data!.servicemen!.asMap().entries.map((s) {
+                            children: widget.data!.servicemen!
+                                .asMap()
+                                .entries
+                                .map((s) {
                           return ServiceProviderLayout(
                               isProvider: false,
                               title: language(context, appFonts.serviceman)
@@ -227,7 +235,6 @@ class _BookingLayoutState extends State<BookingLayout> {
                   ],
                   border: Border.all(color: appColor(context).stroke))
               .paddingOnly(bottom: Insets.i15, left: 20, right: 20)
-
               .inkWell(onTap: widget.onTap),
           CommonArrow(
               arrow: widget.data!.isExpand == true
